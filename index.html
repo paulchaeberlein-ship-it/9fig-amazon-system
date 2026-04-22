@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plug & Play Amazon Systeme | DFY Prozesse & Dashboards</title>
+  <link rel="icon" type="image/svg+xml" href="logos/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="logos/favicon.png" />
+  <link rel="apple-touch-icon" href="logos/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark:    #0B0D14;
+      --dark2:   #13161F;
+      --accent:  #FFFFFF;
+      --muted:   rgba(255,255,255,0.55);
+      --border:  rgba(255,255,255,0.08);
+      --logo-bg: #F4F5F7;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--dark);
+      color: var(--accent);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 48px;
+      background: rgba(11,13,20,0.82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-size: 17px; font-weight: 700;
+      letter-spacing: -0.3px; color: #fff; text-decoration: none;
+    }
+    .nav-logo {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      font-size: 15px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+    }
+    .nav-logo .nav-sub {
+      font-size: 11px;
+      font-weight: 400;
+      font-family: 'Montserrat', sans-serif;
+      color: rgba(255,255,255,0.32);
+      letter-spacing: 0.2px;
+    }
+    .nav-center {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+    }
+    .partner-logo {
+      height: 52px;
+      width: auto;
+      object-fit: contain;
+      opacity: 0.9;
+    }
+    .nav-cta {
+      background: #fff; color: #0B0D14;
+      font-size: 15px; font-weight: 600;
+      padding: 11px 24px; border-radius: 8px;
+      text-decoration: none; transition: opacity .2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ── HERO ── */
+    .hero-wrapper {
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 40%, rgba(99,102,241,0.28) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 20% 60%, rgba(139,92,246,0.22) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 40% at 85% 80%, rgba(59,130,246,0.18) 0%, transparent 50%),
+        linear-gradient(135deg, #0B0D14 0%, #0f1320 40%, #111827 100%);
+    }
+
+    /* Animated glow orbs */
+    .hero-wrapper::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -100px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 65%);
+      border-radius: 50%;
+      animation: float 8s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .hero-wrapper::after {
+      content: '';
+      position: absolute;
+      bottom: -150px; left: -80px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(139,92,246,0.12) 0%, transparent 65%);
+      border-radius: 50%;
+      animation: float 10s ease-in-out infinite reverse;
+      pointer-events: none;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50%       { transform: translateY(-30px) scale(1.05); }
+    }
+    .hero {
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: center;
+      padding: 100px 64px 32px;
+      max-width: 1400px;
+      margin: 0 auto;
+      box-sizing: border-box;
+    }
+    .hero-left { display: flex; flex-direction: column; gap: 20px; }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 100px; padding: 7px 16px;
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.6px; text-transform: uppercase;
+      color: rgba(255,255,255,0.65); width: fit-content;
+    }
+    .badge-dot {
+      width: 7px; height: 7px;
+      background: #4ADE80; border-radius: 50%;
+    }
+
+    h1 {
+      font-size: clamp(28px, 3vw, 46px);
+      font-weight: 800; line-height: 1.12;
+      letter-spacing: -1px; color: #fff;
+    }
+    h1 .gradient-word {
+      background: linear-gradient(90deg, #818cf8 0%, #a78bfa 50%, #60a5fa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 16px; line-height: 1.65;
+      color: var(--muted); max-width: 520px;
+    }
+
+    .bullets { display: flex; flex-direction: column; gap: 10px; }
+    .bullet {
+      display: flex; align-items: flex-start; gap: 11px;
+      font-size: 15px; color: rgba(255,255,255,0.85); line-height: 1.5;
+    }
+    .bullet-icon {
+      width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px;
+      background: rgba(74,222,128,0.14);
+      border: 1px solid rgba(74,222,128,0.28);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .bullet-icon svg { width: 10px; height: 10px; }
+
+    .cta-row { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .btn-primary {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      color: #fff;
+      font-size: 16px; font-weight: 700;
+      padding: 15px 28px; border-radius: 11px;
+      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 9px;
+      transition: all .2s; white-space: nowrap;
+      box-shadow: 0 4px 24px rgba(99,102,241,0.4);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(99,102,241,0.55);
+    }
+    .trust-text { font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.5; }
+
+    /* ── VIDEO ── */
+    .video-wrapper {
+      position: relative;
+      width: 100%; padding-bottom: 56.25%;
+      border-radius: 16px; overflow: hidden;
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.55);
+    }
+    .video-wrapper iframe {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%; border: none;
+    }
+    .video-placeholder {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 14px;
+    }
+    .play-btn {
+      width: 60px; height: 60px;
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .video-placeholder p { font-size: 15px; color: rgba(255,255,255,0.28); }
+
+    /* ── LOGO STRIP ── */
+    .logo-strip {
+      background: #ffffff;
+      padding: 40px 0;
+      overflow: hidden;
+      border-top: 1px solid #E5E7EB;
+      border-bottom: 1px solid #E5E7EB;
+    }
+    .logo-strip-label {
+      text-align: center;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 1.2px; text-transform: uppercase;
+      color: #9CA3AF; margin-bottom: 28px;
+    }
+    .logo-strip-inner { position: relative; }
+    .logo-strip-inner::before,
+    .logo-strip-inner::after {
+      content: ''; position: absolute;
+      top: 0; bottom: 0; width: 120px; z-index: 2;
+      pointer-events: none;
+    }
+    .logo-strip-inner::before {
+      left: 0;
+      background: linear-gradient(to right, #ffffff, transparent);
+    }
+    .logo-strip-inner::after {
+      right: 0;
+      background: linear-gradient(to left, #ffffff, transparent);
+    }
+    .marquee-track {
+      display: flex; width: max-content;
+      animation: marquee 36s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .logo-item {
+      display: flex; align-items: center; justify-content: center;
+      height: 105px; padding: 0 64px; flex-shrink: 0;
+    }
+    .logo-item img {
+      height: 84px; max-width: 260px; width: auto;
+      object-fit: contain;
+      opacity: 0.85;
+      mix-blend-mode: multiply;
+      transition: opacity .3s;
+    }
+    .logo-item img:hover { opacity: 1; }
+
+    /* ── CASE STUDIES ── */
+    .case-studies {
+      background: #0B0D14;
+      padding: 88px 48px 56px;
+      position: relative;
+      overflow: hidden;
+    }
+    .case-studies::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -100px;
+      width: 700px; height: 500px;
+      background: radial-gradient(ellipse, rgba(99,102,241,0.12) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .case-studies::after {
+      content: '';
+      position: absolute;
+      bottom: -150px; left: -100px;
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse, rgba(139,92,246,0.10) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .cs-inner {
+      position: relative; z-index: 1;
+      max-width: 1280px; margin: 0 auto;
+    }
+    .cs-header {
+      text-align: center; margin-bottom: 56px;
+    }
+    .cs-eyebrow {
+      display: inline-block;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 1.4px; text-transform: uppercase;
+      color: #818cf8; margin-bottom: 16px;
+    }
+    .cs-header h2 {
+      font-size: clamp(28px, 3vw, 44px);
+      font-weight: 800; letter-spacing: -1px;
+      color: #fff; line-height: 1.15;
+    }
+    .cs-header h2 span {
+      background: linear-gradient(90deg, #818cf8 0%, #a78bfa 50%, #60a5fa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .cs-header p {
+      font-size: 16px; color: rgba(255,255,255,0.45);
+      margin-top: 14px; max-width: 520px; margin-left: auto; margin-right: auto;
+    }
+    .cs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    /* 6 cards — let all flow naturally in 3-col grid */
+    .cs-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 32px;
+      display: flex; flex-direction: column; gap: 20px;
+      transition: border-color .25s, transform .25s, box-shadow .25s;
+    }
+    .cs-card:hover {
+      border-color: rgba(129,140,248,0.35);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 48px rgba(99,102,241,0.15);
+    }
+    .cs-card-top {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .cs-tag {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.6px; text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 100px; padding: 5px 12px;
+    }
+    .cs-time {
+      font-size: 12px; color: rgba(255,255,255,0.3);
+      font-weight: 500;
+    }
+    .cs-hero-stat {
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .cs-hero-label {
+      font-size: 12px; color: rgba(255,255,255,0.4); font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .cs-hero-value {
+      font-size: clamp(26px, 2.2vw, 34px);
+      font-weight: 800; letter-spacing: -1px;
+      color: #4ADE80; line-height: 1.1;
+    }
+    .cs-hero-value.negative { color: #4ADE80; }
+    .cs-divider {
+      height: 1px; background: rgba(255,255,255,0.07);
+    }
+    .cs-stats {
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .cs-stat-row {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .cs-stat-label {
+      font-size: 13px; color: rgba(255,255,255,0.45); font-weight: 400;
+    }
+    .cs-stat-values {
+      display: flex; align-items: center; gap: 8px;
+    }
+    .cs-stat-before {
+      font-size: 13px; color: rgba(255,255,255,0.35); font-weight: 500;
+    }
+    .cs-stat-arrow { font-size: 11px; color: rgba(255,255,255,0.2); }
+    .cs-stat-after {
+      font-size: 13px; font-weight: 700; color: #fff;
+    }
+    .cs-stat-after.green { color: #4ADE80; }
+    .cs-stat-delta {
+      font-size: 11px; font-weight: 700; padding: 2px 7px;
+      border-radius: 6px; white-space: nowrap;
+    }
+    .cs-stat-delta.up   { background: rgba(74,222,128,0.12); color: #4ADE80; }
+    .cs-stat-delta.down { background: rgba(74,222,128,0.12); color: #4ADE80; }
+    .cs-client {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 4px;
+    }
+    .cs-client-name {
+      font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.65);
+      letter-spacing: 0.1px;
+    }
+    .cs-client-tag {
+      font-size: 11px; color: rgba(255,255,255,0.25); font-style: italic;
+    }
+
+    @media (max-width: 1024px) {
+      .cs-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .cs-grid .cs-card:nth-child(4),
+      .cs-grid .cs-card:nth-child(5) { grid-column: auto; }
+    }
+    @media (max-width: 640px) {
+      .cs-grid { grid-template-columns: 1fr; }
+      .case-studies { padding: 64px 20px; }
+    }
+
+    /* ── BOOKING ── */
+    .booking {
+      background: #fff; color: #0B0D14;
+      padding: 80px 48px 100px;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 14px;
+    }
+    .booking-eyebrow {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 1.2px; text-transform: uppercase;
+      color: #9CA3AF;
+    }
+    .booking h2 {
+      font-size: clamp(26px, 2.8vw, 40px);
+      font-weight: 800; letter-spacing: -0.8px;
+      color: #0B0D14; text-align: center;
+      max-width: 600px; line-height: 1.2;
+    }
+    .booking-sub {
+      font-size: 16px; color: #6B7280;
+      text-align: center; max-width: 460px;
+      line-height: 1.65; margin-bottom: 10px;
+    }
+    .calendar-embed {
+      width: 100%; max-width: 900px;
+      border-radius: 16px; overflow: hidden;
+      border: 1px solid #E5E7EB;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.07);
+    }
+    .calendar-embed iframe {
+      width: 100%; height: 680px; border: none; display: block;
+    }
+
+    /* ── SCARCITY ── */
+    .scarcity {
+      background: #0B0D14;
+      padding: 72px 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .scarcity::before {
+      content: '';
+      position: absolute;
+      top: -100px; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 300px;
+      background: radial-gradient(ellipse, rgba(99,102,241,0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .scarcity-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      max-width: 680px;
+      text-align: center;
+    }
+    .scarcity-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(239,68,68,0.12);
+      border: 1px solid rgba(239,68,68,0.3);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #f87171;
+    }
+    .scarcity-dot {
+      width: 6px; height: 6px;
+      background: #ef4444;
+      border-radius: 50%;
+      animation: pulse-red 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse-red {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(1.3); }
+    }
+    .scarcity h2 {
+      font-size: clamp(24px, 2.8vw, 38px);
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      color: #fff;
+      line-height: 1.2;
+    }
+    .scarcity h2 span {
+      background: linear-gradient(90deg, #818cf8, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .scarcity-sub {
+      font-size: 16px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.65;
+      max-width: 520px;
+    }
+    .slots-row {
+      display: flex;
+      gap: 10px;
+      margin: 8px 0;
+    }
+    .slot {
+      width: 36px; height: 10px;
+      border-radius: 100px;
+    }
+    .slot.taken  { background: #ef4444; }
+    .slot.open   { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); }
+    .slots-label {
+      font-size: 13px;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.2px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #fff; border-top: 1px solid #E5E7EB;
+      padding: 22px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    footer p, footer a { font-size: 13px; color: #9CA3AF; text-decoration: none; }
+    footer a:hover { color: #6B7280; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      nav { padding: 10px 20px; }
+      .partner-logo { height: 36px; }
+      .hero {
+        grid-template-columns: 1fr;
+        height: auto;
+        min-height: 100vh;
+        padding: 80px 20px 32px;
+        gap: 24px;
+      }
+      h1 { font-size: 22px; }
+      .hero-sub { font-size: 12px; }
+      .bullet { font-size: 12px; }
+      .booking { padding: 56px 20px 72px; }
+      footer { flex-direction: column; gap: 6px; text-align: center; padding: 18px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    Amazon Apex 9-Figure Operating System&#8482;
+    <span class="nav-sub">Ein Produkt der Apex Operating Company LLC</span>
+  </a>
+  <div class="nav-center">
+    <img src="logos/partner-logo.png" alt="Verified Partner" class="partner-logo" />
+  </div>
+  <a class="nav-cta" href="#booking">Gespräch buchen →</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero-wrapper">
+<section class="hero">
+  <div class="hero-left">
+    <div class="badge">
+      <span class="badge-dot"></span>
+      Done For You · Plug &amp; Play
+    </div>
+
+    <h1>Willst du ein <span class="gradient-word">Plug&nbsp;&amp;&nbsp;Play</span> von <span class="gradient-word">9-stelligen</span> Amazon Sellern &amp; Vendoren in deinem Unternehmen installieren?</h1>
+
+    <p class="hero-sub">
+      Die exakten Prozesse, Dashboards und SOPs, von 9-stelligen Sellern und Vendoren — einsatzbereit, in deinem Setup, ASAP.
+    </p>
+
+    <div class="bullets">
+      <div class="bullet">
+        <div class="bullet-icon">
+          <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#4ADE80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <b>Wir garantieren, dass wir deinen Profit optimieren — oder wir arbeiten kostenlos.</b>
+      </div>
+      <div class="bullet">
+        <div class="bullet-icon">
+          <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#4ADE80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        9-stellige SOP-Bibliothek &amp; Workflows
+      </div>
+      <div class="bullet">
+        <div class="bullet-icon">
+          <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#4ADE80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        Strategische Beratung von Senior Amazon PPC Managern &amp; Senior Data Analysten
+      </div>
+      <div class="bullet">
+        <div class="bullet-icon">
+          <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#4ADE80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        Automatisierte Datenaggregation direkt aus Amazon APIs direkt in deine Sheets
+      </div>
+      <div class="bullet">
+        <div class="bullet-icon">
+          <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#4ADE80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        Chirurgische menschliche Feinarbeit — Mensch &amp; Maschine, das beste von beiden Welten
+      </div>
+    </div>
+
+    <div class="cta-row">
+      <a class="btn-primary" href="#booking">
+        Jetzt Qualifikationsgespräch buchen
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+    <p class="trust-text">Keine Agentur. Keine Haken. Nur Systeme. Nur Leistung. Nur Inhouse und strategische Beratung.</p>
+  </div>
+
+  <!-- VIDEO RIGHT -->
+  <div>
+    <div class="video-wrapper">
+      <!--
+        VIDEO EINBINDEN:
+        YouTube:  src="https://www.youtube.com/embed/DEINE_VIDEO_ID?rel=0&modestbranding=1"
+        Loom:     src="https://www.loom.com/embed/DEINE_LOOM_ID"
+      -->
+      <div class="video-placeholder">
+        <div class="play-btn">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M6 4l11 6-11 6V4z" fill="rgba(255,255,255,0.55)"/>
+          </svg>
+        </div>
+        <p>Dein Demo-Video hier einbinden</p>
+      </div>
+      <!-- Wenn Video bereit: Placeholder-div entfernen und iframe einkommentieren
+      <iframe
+        src="https://www.youtube.com/embed/YOUR_VIDEO_ID?rel=0&modestbranding=1"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+      -->
+    </div>
+  </div>
+</section>
+
+</div>
+
+<!-- LOGO STRIP -->
+<div class="logo-strip">
+  <p class="logo-strip-label">Operating System basierend auf SOPs von 8- und 9-stelligen Firmen mit denen wir arbeiten durften</p>
+  <div class="logo-strip-inner">
+    <div class="marquee-track">
+      <!-- Set 1 -->
+      <div class="logo-item"><img src="logos/pyle.png"                alt="Pyle"/></div>
+      <div class="logo-item"><img src="logos/scale-insights.png"      alt="Scale Insights"/></div>
+      <div class="logo-item"><img src="logos/basic-research.png"      alt="Basic Research" style="height:168px;"/></div>
+      <div class="logo-item"><img src="logos/filterbuy.png"           alt="FilterBuy"/></div>
+      <div class="logo-item"><img src="logos/deuba-xxl.png"           alt="Deuba XXL"/></div>
+      <div class="logo-item"><img src="logos/amz-pathfinder.png"      alt="AMZ Pathfinder"/></div>
+      <div class="logo-item"><img src="logos/my-amazon-guy.png"       alt="My Amazon Guy"/></div>
+      <div class="logo-item"><img src="logos/intelligent-blends.png"  alt="Intelligent Blends" style="height:63px;"/></div>
+      <!-- Set 2 — seamless loop -->
+      <div class="logo-item"><img src="logos/pyle.png"                alt="Pyle"/></div>
+      <div class="logo-item"><img src="logos/scale-insights.png"      alt="Scale Insights"/></div>
+      <div class="logo-item"><img src="logos/basic-research.png"      alt="Basic Research" style="height:168px;"/></div>
+      <div class="logo-item"><img src="logos/filterbuy.png"           alt="FilterBuy"/></div>
+      <div class="logo-item"><img src="logos/deuba-xxl.png"           alt="Deuba XXL"/></div>
+      <div class="logo-item"><img src="logos/amz-pathfinder.png"      alt="AMZ Pathfinder"/></div>
+      <div class="logo-item"><img src="logos/my-amazon-guy.png"       alt="My Amazon Guy"/></div>
+      <div class="logo-item"><img src="logos/intelligent-blends.png"  alt="Intelligent Blends" style="height:63px;"/></div>
+    </div>
+  </div>
+</div>
+
+<!-- CASE STUDIES -->
+<section class="case-studies">
+  <div class="cs-inner">
+    <div class="cs-header">
+      <span class="cs-eyebrow">Bewiesene Ergebnisse</span>
+      <h2>Echte Zahlen.<br/><span>Echte Kunden.</span></h2>
+      <p>Keine Hochglanz-Versprechen. Nur verifizierte Resultate aus realen Projekten mit 7-, 8- und 9-stelligen Marken.</p>
+    </div>
+
+    <div class="cs-grid">
+
+      <!-- Card 1: SSE Photo Video -->
+      <div class="cs-card">
+        <div class="cs-card-top">
+          <span class="cs-tag">PPC · Amazon Ads</span>
+          <span class="cs-time">64 Tage</span>
+        </div>
+        <div class="cs-hero-stat">
+          <span class="cs-hero-label">Additional Ad Revenue</span>
+          <span class="cs-hero-value">+$148,207.32</span>
+        </div>
+        <div class="cs-divider"></div>
+        <div class="cs-stats">
+          <div class="cs-stat-row">
+            <span class="cs-stat-label">ACOS</span>
+            <div class="cs-stat-values">
+              <span class="cs-stat-after green">4.12%</span>
+              <span class="cs-stat-delta down">sehr effizient</span>
+            </div>
+          </div>
+          <div class="cs-stat-row">
+            <span class="cs-stat-label">Ad Spend</span>
+            <div class="cs-stat-values">
+              <span class="cs-stat-after">$6,099.27</span>
+            </div>
+          </div>
+        </div>
+        <div class="cs-client">
+          <span style="display:inline-flex;align-items:center;justify-content:center;background:#fff;border-radius:8px;padding:8px 14px;width:160px;height:44px;overflow:hidden;">
+            <img src="logos/logo_SSE.png" alt="SSE Photo Video" style="width:100%;height:100%;object-fit:contain;display:block;transform:scale(2.0);" />
+          </span>
+          <span class="cs-client-tag">Amazon USA</span>
+        </div>
+      </div>
+
+      <!-- Card 2: EcoTeas -->
+      <div class="cs-card">
+        <div class="cs-card-top">
+          <span class="cs-tag">PPC · TACoS</span>
+          <span class="cs-time">5 Monate</span>
+        </div>
+        <div class="cs-hero-stat">
+          <span class="cs-hero-label">Umsatzwachstum</span>
+          <span class="cs-hero-value">+26.39%</span>
+        </div>
+        <div class="cs-divider"></div>
+        <div class="cs-stats">
+          <div class="cs-stat-row">
+            <span class="cs-stat-label">Monatsumsatz</span>
+            <div class="cs-stat-values">
+              <span class="cs-stat-before">$123,771</span>
+              <span class="cs-stat-arrow">→</span>
+              <span class="cs-stat-after green">$156,429</span>
+            </div>
+          </div>
+          <div class="cs-stat-row">
+            <span class="cs-stat-label">TACoS</span>
+            <div class="cs-stat-values">
+              <span class="cs-stat-before">11.78%</span>
+              <span class="cs-stat-arrow">→</span>
+              <span class="cs-stat-after green">6.45%</span>
+              <span class="cs-stat-delta down">−45.25%</span>
+            </div>
+          </div>
+        </div>
+        <div class="cs-client">
+          <span style="display:inline-flex;align-items:center;justify-content:center;background:#fff;border-radius:8px;padding:8px 14px;width:160px;height:44px;overflow:hidden;">
+            <img src="logos/ecoteas.png" alt="EcoTeas" style="width:100%;height:100%;object-fit:contain;display:block;transform:scale(2.0);" />
+          </span>
+          <span class="cs-client-tag">Organic Yerba Mate · Amazon USA</span>
+        </div>
+      </div>
+
+      <!-- Card 3: SeroVital -->
+      <div class="cs-card">
+        <div class="cs-card-top">
+          <span class="cs-tag">PPC · Skalierung</span>
+          <span class="cs-time">7 Monate</span>
+        </div>
+        <div class="cs-hero-stat">
+          <span class="cs-hero-label">Umsatzwachstum</span>
+          <span class="cs-hero-value">+75.16%</span>
+        </div>
+        <div class="cs-divider"></div>
+        <div class="cs-stats">
+          <div class="cs-stat-row">
+            <span class="cs-stat-label">Monatsumsatz</span>
+            <div class="cs-stat-values">
+              <span class="cs-stat-before">$593,437</span>
+              <span class="cs-stat-arrow">→</span>
+              <span class="cs-stat-after green">$1,039,439</span>
+            </div>
+          </div>
+          <div class="cs-stat-row">
+            <span class="cs-stat-label">TACoS</span>
+            <div class="cs-stat-values">
+              <span class="cs-stat-before">10.99%</span>
+              <span class="cs-stat-arrow">→</span>
+              <span class="cs-stat-after green">5.69%</span>
+              <span class="cs-stat-delta down">−48.24%</span>
+            </div>
+          </div>
+        </div>
+        <div class="cs-client">
+          <span style="display:inline-flex;align-items:center;justify-content:center;background:#fff;border-radius:8px;padding:8px 14px;width:160px;height:44px;">
+            <img src="logos/serovital.webp" alt="SeroVital" style="width:100%;height:100%;object-fit:contain;display:block;" />
+          </span>
+          <span class="cs-client-tag">Health & Wellness · Amazon USA</span>
+        </div>
+      </div>
+
+      <!-- Card 4: Anonymous German KDP Brand -->
+      <div class="cs-card">
+        <div class="cs-card-top">
+          <span class="cs-tag">Amazon KDP · PPC</span>
+          <span class="cs-time">12 Monate</span>
+        </div>
+        <div class="cs-hero-stat">
+          <span class="cs-hero-label">Nettoprofit-Wachstum</span>
+          <span class="cs-hero-value">+192.74%</span>
+        </div>
+        <div class="cs-divider"></div>
+        <div class="cs-stats">
+          <div class="cs-stat-row">
+            <span class="cs-stat-label">Nettoprofit / Monat</span>
+            <div class="cs-stat-values">
+              <span class="cs-stat-before">€11,515</span>
+              <span class="cs-stat-arrow">→</span>
+              <span class="cs-stat-after green">€33,710</span>
+            </div>
+          </div>
+          <div class="cs-stat-row">
+            <span class="cs-stat-label">TACoS</span>
+            <div class="cs-stat-values">
+              <span class="cs-stat-before">12.32%</span>
+              <span class="cs-stat-arrow">→</span>
+              <span class="cs-stat-after green">8.23%</span>
+              <span class="cs-stat-delta down">−33.20%</span>
+            </div>
+          </div>
+        </div>
+        <div class="cs-client">
+          <span style="display:inline-flex;align-items:center;justify-content:center;background:#fff;border-radius:8px;padding:8px 14px;width:160px;height:44px;overflow:hidden;">
+            <span style="font-size:13px;font-weight:700;color:#111;letter-spacing:0.5px;">Deutsche KDP Brand</span>
+          </span>
+          <span class="cs-client-tag">Anonymisiert auf Kundenwunsch</span>
+        </div>
+      </div>
+
+      <!-- Card 5: British Luxury Brand (Scriveiner, anonymized) -->
+      <div class="cs-card">
+        <div class="cs-card-top">
+          <span class="cs-tag">Supply Chain · Fractional CMO</span>
+          <span class="cs-time">2023</span>
+        </div>
+        <div class="cs-hero-stat">
+          <span class="cs-hero-label">Container-Kosteneinsparung (Port to Port)</span>
+          <span class="cs-hero-value">−$3,932.32</span>
+        </div>
+        <div class="cs-divider"></div>
+        <div class="cs-stats">
+          <div class="cs-stat-row">
+            <span class="cs-stat-label">On-Carriage Kosten</span>
+            <div class="cs-stat-values">
+              <span class="cs-stat-before">$5,200</span>
+              <span class="cs-stat-arrow">→</span>
+              <span class="cs-stat-after green">&lt;$1,000</span>
+              <span class="cs-stat-delta down">−80%+</span>
+            </div>
+          </div>
+          <div class="cs-stat-row">
+            <span class="cs-stat-label">Aufgabenbereich</span>
+            <div class="cs-stat-values">
+              <span class="cs-stat-after" style="font-size:12px;color:rgba(255,255,255,0.45);">PPC, Supply Chain, SEO, KPI</span>
+            </div>
+          </div>
+        </div>
+        <div class="cs-client">
+          <span style="display:inline-flex;align-items:center;justify-content:center;background:#fff;border-radius:8px;padding:8px 14px;width:160px;height:44px;overflow:hidden;">
+            <img src="logos/deuba-cs.png" alt="Deuba" style="width:100%;height:100%;object-fit:contain;display:block;transform:scale(2.0);" />
+          </span>
+          <span class="cs-client-tag">Home & Garden · Amazon USA</span>
+        </div>
+      </div>
+
+      <!-- Card 6: Glart -->
+      <div class="cs-card">
+        <div class="cs-card-top">
+          <span class="cs-tag">Vendor · Automotive</span>
+          <span class="cs-time">YTD YoY · Amazon DE</span>
+        </div>
+        <div class="cs-hero-stat">
+          <span class="cs-hero-label">Profit-Wachstum</span>
+          <span class="cs-hero-value">+10.51%</span>
+        </div>
+        <div class="cs-divider"></div>
+        <div class="cs-stats">
+          <div class="cs-stat-row">
+            <span class="cs-stat-label">Shipped COGS</span>
+            <div class="cs-stat-values">
+              <span class="cs-stat-after green">+20.67%</span>
+              <span class="cs-stat-delta up">Wachstum</span>
+            </div>
+          </div>
+          <div class="cs-stat-row">
+            <span class="cs-stat-label">Profit</span>
+            <div class="cs-stat-values">
+              <span class="cs-stat-after green">+10.51%</span>
+              <span class="cs-stat-delta up">Anstieg</span>
+            </div>
+          </div>
+        </div>
+        <div class="cs-client">
+          <span style="display:inline-flex;align-items:center;justify-content:center;background:#fff;border-radius:8px;padding:8px 14px;width:160px;height:44px;overflow:hidden;">
+            <img src="logos/glart.avif" alt="Glart" style="width:100%;height:100%;object-fit:contain;display:block;" />
+          </span>
+          <span class="cs-client-tag">Premium Car Care · Amazon DE</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom row -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:32px;margin-bottom:8px;">
+      <span style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:100px;padding:10px 24px;font-size:14px;font-weight:600;color:rgba(255,255,255,0.65);letter-spacing:0.3px;">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="rgba(255,255,255,0.4)" stroke-width="1.2"/><path d="M4 7l2 2 4-4" stroke="#4ADE80" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Und viele mehr
+      </span>
+      <p style="font-size:13px;color:rgba(255,255,255,0.3);text-align:center;line-height:1.65;max-width:480px;margin:0;">
+        Alle Case Studies sind verifizierbar. Auf Anfrage stellen wir Ansprechpartner bei den jeweiligen Unternehmen zur Verfügung.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="booking" id="booking">
+  <p class="booking-eyebrow">Kostenlos · 30 Minuten</p>
+  <h2>Qualifikationsgespräch vereinbaren.</h2>
+  <p class="booking-sub">
+    30 Minuten. Kein Pitch. Ein ehrliches Gespräch darüber, was in deinem Amazon-Business gerade Systeme braucht.
+  </p>
+  <p style="font-size:13px;color:#9CA3AF;text-align:center;max-width:480px;line-height:1.65;margin-top:-4px;">
+    <strong style="color:#6B7280;">Wichtiger Hinweis:</strong> Wir können nicht jedem Unternehmen helfen. Wenn wir keine hohe Erfolgswahrscheinlichkeit für eine Zusammenarbeit sehen, lehnen wir das Projekt ab — in deinem und unserem Interesse.
+  </p>
+
+  <div class="calendar-embed">
+    <!--
+      GOOGLE CALENDAR:
+      calendar.google.com → Terminplanung → Link kopieren → hier einsetzen
+      src="https://calendar.google.com/calendar/appointments/schedules/DEINE_ID?gv=true"
+
+      CALENDLY (Alternative):
+      src="https://calendly.com/DEIN-NAME/30min"
+    -->
+    <iframe src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3QxLPHocbLtivzrN_56nZqGTDaudQxv4g9aKP_zHvQ80DIWl83MIf6fP2cgAsX15pYOucLtu6I?gv=true" style="border: 0" width="100%" height="600" frameborder="0"></iframe>
+  </div>
+</section>
+
+<!-- SCARCITY -->
+<section class="scarcity">
+  <div class="scarcity-inner">
+    <div class="scarcity-badge">
+      <span class="scarcity-dot"></span>
+      Limitierte Kapazität
+    </div>
+    <h2>Wir arbeiten maximal mit <span>5 neuen Kunden</span> pro Monat zusammen.</h2>
+    <p class="scarcity-sub">
+      Qualität ist kein Versprechen — es ist eine Entscheidung. Deshalb begrenzen wir unsere Kapazität bewusst. Jedes Projekt bekommt volle Aufmerksamkeit, echte Seniorität und messbare Ergebnisse.
+    </p>
+    <div class="slots-row">
+      <div class="slot taken"></div>
+      <div class="slot taken"></div>
+      <div class="slot taken"></div>
+      <div class="slot open"></div>
+      <div class="slot open"></div>
+    </div>
+    <p class="slots-label">3 von 5 Plätzen für April belegt</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Apex Operating Company LLC. Alle Rechte vorbehalten.</p>
+  <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:center;">
+    <a href="impressum.html">Impressum</a>
+    <a href="datenschutz.html">Datenschutz</a>
+    <a href="agb.html">AGB</a>
+    <a href="mailto:paul@apexoperatingcompany.com">paul@apexoperatingcompany.com</a>
+  </div>
+</footer>
+
+</body>
+</html>
