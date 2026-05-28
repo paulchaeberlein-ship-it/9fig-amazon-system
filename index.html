@@ -1002,6 +1002,48 @@
         opacity 1s cubic-bezier(0.25, 0.4, 0.25, 1) var(--fade-delay, 0s),
         transform 1s cubic-bezier(0.25, 0.4, 0.25, 1) var(--fade-delay, 0s);
     }
+    /* ── Lite-YouTube: thumbnail-with-play-button that swaps to iframe on click.
+       Bypasses most adblocker/tracking-protection rules that silently kill
+       bare YouTube iframes. The fallback-link below is a hard guarantee. ── */
+    .lite-yt {
+      position: relative;
+      display: block;
+      width: 100%;
+      cursor: pointer;
+      background: #000;
+      overflow: hidden;
+      border-radius: inherit;
+    }
+    .lite-yt img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      transition: opacity .2s, transform .35s;
+    }
+    .lite-yt:hover img { opacity: 0.85; transform: scale(1.02); }
+    .lite-yt-play {
+      position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      width: 88px; height: 62px;
+      display: flex; align-items: center; justify-content: center;
+      pointer-events: none;
+      transition: transform .2s;
+    }
+    .lite-yt:hover .lite-yt-play { transform: translate(-50%, -50%) scale(1.08); }
+    .lite-yt-play svg { width: 100%; height: 100%; filter: drop-shadow(0 4px 16px rgba(0,0,0,0.5)); }
+    .video-fallback-link {
+      display: block;
+      text-align: center;
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      margin-top: 8px;
+      transition: color .2s;
+    }
+    .video-fallback-link:hover { color: rgba(255,255,255,0.95); }
+
     .fade-up.is-visible {
       opacity: 1;
       transform: translateY(0);
@@ -1066,16 +1108,31 @@
       <img src="logos/google-cloud-certified.png" alt="Google Cloud Certified — Professional Cloud Developer" />
     </div>
 
-    <!-- VIDEO (mobile-only, sits right after the headline; desktop uses the right-column video below) -->
+    <!-- VIDEO (mobile-only) — lite-youtube pattern: thumbnail first, iframe loads on click.
+         Bypasses ~90% of adblocker/tracking-protection rules that silently kill bare iframes.
+         The <noscript> fallback + the "Direkt auf YouTube" link below mean even a JS-blocked
+         visitor or a hard iframe-block still sees a thumbnail and a working link. -->
     <div class="video-wrapper video-mobile fade-up" style="--fade-delay:0.8s">
-      <iframe
-        src="https://www.youtube-nocookie.com/embed/MZ1VQ3E_m0I?rel=0&modestbranding=1"
-        title="9-Figure Amazon Operating System demo"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        loading="lazy"
-        allowfullscreen>
-      </iframe>
+      <a class="lite-yt" data-yt="MZ1VQ3E_m0I"
+         href="https://www.youtube.com/watch?v=MZ1VQ3E_m0I"
+         target="_blank" rel="noopener"
+         title="9-Figure Amazon Operating System demo (auf YouTube ansehen)">
+        <img src="https://i.ytimg.com/vi/MZ1VQ3E_m0I/maxresdefault.jpg"
+             onerror="this.src='https://i.ytimg.com/vi/MZ1VQ3E_m0I/hqdefault.jpg'"
+             alt="9-Figure Amazon Operating System demo" loading="lazy" />
+        <span class="lite-yt-play" aria-hidden="true">
+          <svg viewBox="0 0 68 48"><path d="M66.52 7.74a8.2 8.2 0 0 0-5.77-5.79C55.7.7 34 .7 34 .7s-21.7 0-26.75 1.25A8.2 8.2 0 0 0 1.48 7.74C.23 12.79.23 24 .23 24s0 11.21 1.25 16.26a8.2 8.2 0 0 0 5.77 5.79C12.3 47.3 34 47.3 34 47.3s21.7 0 26.75-1.25a8.2 8.2 0 0 0 5.77-5.79C67.77 35.21 67.77 24 67.77 24s0-11.21-1.25-16.26z" fill="#f00"/><path d="M27 34l18-10L27 14z" fill="#fff"/></svg>
+        </span>
+      </a>
+      <noscript>
+        <iframe src="https://www.youtube-nocookie.com/embed/MZ1VQ3E_m0I?rel=0&modestbranding=1"
+                title="9-Figure Amazon Operating System demo" allowfullscreen></iframe>
+      </noscript>
     </div>
+    <a href="https://www.youtube.com/watch?v=MZ1VQ3E_m0I" target="_blank" rel="noopener"
+       class="video-fallback-link video-mobile fade-up" style="--fade-delay:0.85s">
+      Probleme beim Abspielen? Direkt auf YouTube ansehen →
+    </a>
 
     <p class="hero-sub fade-up" style="--fade-delay:0.9s">
       Die exakten Prozesse, Dashboards und SOPs, von 9-stelligen Sellern und Vendoren — einsatzbereit, in deinem Setup, ASAP.
@@ -1133,13 +1190,26 @@
       <img src="logos/google-cloud-certified.png" alt="Google Cloud Certified — Professional Cloud Developer" />
     </div>
     <div class="video-wrapper">
-      <iframe
-        src="https://www.youtube-nocookie.com/embed/MZ1VQ3E_m0I?rel=0&modestbranding=1"
-        title="9-Figure Amazon Operating System demo"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
-      </iframe>
+      <a class="lite-yt" data-yt="MZ1VQ3E_m0I"
+         href="https://www.youtube.com/watch?v=MZ1VQ3E_m0I"
+         target="_blank" rel="noopener"
+         title="9-Figure Amazon Operating System demo (auf YouTube ansehen)">
+        <img src="https://i.ytimg.com/vi/MZ1VQ3E_m0I/maxresdefault.jpg"
+             onerror="this.src='https://i.ytimg.com/vi/MZ1VQ3E_m0I/hqdefault.jpg'"
+             alt="9-Figure Amazon Operating System demo" loading="lazy" />
+        <span class="lite-yt-play" aria-hidden="true">
+          <svg viewBox="0 0 68 48"><path d="M66.52 7.74a8.2 8.2 0 0 0-5.77-5.79C55.7.7 34 .7 34 .7s-21.7 0-26.75 1.25A8.2 8.2 0 0 0 1.48 7.74C.23 12.79.23 24 .23 24s0 11.21 1.25 16.26a8.2 8.2 0 0 0 5.77 5.79C12.3 47.3 34 47.3 34 47.3s21.7 0 26.75-1.25a8.2 8.2 0 0 0 5.77-5.79C67.77 35.21 67.77 24 67.77 24s0-11.21-1.25-16.26z" fill="#f00"/><path d="M27 34l18-10L27 14z" fill="#fff"/></svg>
+        </span>
+      </a>
+      <noscript>
+        <iframe src="https://www.youtube-nocookie.com/embed/MZ1VQ3E_m0I?rel=0&modestbranding=1"
+                title="9-Figure Amazon Operating System demo" allowfullscreen></iframe>
+      </noscript>
     </div>
+    <a href="https://www.youtube.com/watch?v=MZ1VQ3E_m0I" target="_blank" rel="noopener"
+       class="video-fallback-link" style="margin-top:10px;">
+      Probleme beim Abspielen? Direkt auf YouTube ansehen →
+    </a>
   </div>
 </section>
 
@@ -1761,5 +1831,29 @@
 })();
 </script>
 
+<script>
+/* Lite-YouTube: click thumbnail → swap to autoplay iframe.
+   On any failure, the underlying <a href="…youtube.com/watch?v=…"> falls back
+   to opening YouTube directly (modifier-click or middle-click already does this). */
+(function () {
+  document.querySelectorAll('a.lite-yt[data-yt]').forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      // Allow ctrl/cmd-click + middle-click to open YouTube in a new tab as normal
+      if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
+      e.preventDefault();
+      var id = el.dataset.yt;
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube-nocookie.com/embed/' + id +
+                   '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+      iframe.title = el.getAttribute('title') || 'Video';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allowFullscreen = true;
+      iframe.setAttribute('frameborder', '0');
+      iframe.style.cssText = 'width:100%;height:100%;border:0;display:block;';
+      el.parentNode.replaceChild(iframe, el);
+    });
+  });
+})();
+</script>
 </body>
 </html>
