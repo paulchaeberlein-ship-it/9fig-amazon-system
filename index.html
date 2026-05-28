@@ -44,16 +44,15 @@
       border-bottom: 1px solid var(--border);
     }
     .nav-logo {
-      font-size: 17px; font-weight: 700;
-      letter-spacing: -0.3px; color: #fff; text-decoration: none;
-    }
-    .nav-logo {
       display: flex;
       flex-direction: column;
       gap: 3px;
-      font-size: 15px;
+      font-size: 20px;
       font-family: 'Montserrat', sans-serif;
       font-weight: 700;
+      letter-spacing: -0.3px;
+      color: #fff;
+      text-decoration: none;
     }
     .nav-logo .nav-sub {
       font-size: 11px;
@@ -62,26 +61,46 @@
       color: rgba(255,255,255,0.32);
       letter-spacing: 0.2px;
     }
-    .nav-center {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
+    .nav-link {
+      font-size: 15px; font-weight: 600;
+      color: #fff;
+      text-decoration: none;
+      padding: 8px 12px;
+      transition: opacity .2s;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .nav-link:hover { opacity: 0.75; }
+    .cert-badges {
       display: flex;
       align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 18px;
     }
-    .partner-logo {
-      height: 52px;
+    .cert-badges img {
+      height: 64px;
       width: auto;
       object-fit: contain;
-      opacity: 0.9;
+      border-radius: 10px;
     }
+    .cert-badges-mobile { display: none; }
     .nav-cta {
       background: #fff; color: #0B0D14;
       font-size: 15px; font-weight: 600;
-      padding: 11px 24px; border-radius: 8px;
+      padding: 11px 24px; border-radius: 9999px;
       text-decoration: none; transition: opacity .2s;
     }
     .nav-cta:hover { opacity: 0.85; }
+    .nav-actions {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav-cta-wa {
+      background: #25D366; color: #fff;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: background .2s;
+    }
+    .nav-cta-wa:hover { background: #1ebd5a; opacity: 1; }
 
     /* ── HERO ── */
     .hero-wrapper {
@@ -183,7 +202,7 @@
       background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
       color: #fff;
       font-size: 16px; font-weight: 700;
-      padding: 15px 28px; border-radius: 11px;
+      padding: 15px 28px; border-radius: 9999px;
       text-decoration: none;
       display: inline-flex; align-items: center; gap: 9px;
       transition: all .2s; white-space: nowrap;
@@ -208,19 +227,7 @@
       position: absolute; top: 0; left: 0;
       width: 100%; height: 100%; border: none;
     }
-    .video-placeholder {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 14px;
-    }
-    .play-btn {
-      width: 60px; height: 60px;
-      background: rgba(255,255,255,0.09);
-      border: 1px solid rgba(255,255,255,0.16);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .video-placeholder p { font-size: 15px; color: rgba(255,255,255,0.28); }
+    .video-mobile { display: none; }
 
     /* ── LOGO STRIP ── */
     .logo-strip {
@@ -257,8 +264,8 @@
     }
     .marquee-track:hover { animation-play-state: paused; }
     @keyframes marquee {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
+      from { transform: translateX(-50%); }
+      to   { transform: translateX(0); }
     }
     .logo-item {
       display: flex; align-items: center; justify-content: center;
@@ -420,13 +427,29 @@
       .cs-grid .cs-card:nth-child(5) { grid-column: auto; }
     }
     @media (max-width: 640px) {
-      .cs-grid { grid-template-columns: 1fr; }
-      .case-studies { padding: 64px 20px; }
+      .cs-grid { grid-template-columns: 1fr; gap: 14px; }
+      .case-studies { padding: 56px 16px; }
+      .cs-card { padding: 20px; gap: 14px; border-radius: 14px; }
+      .cs-header h2 { font-size: 28px; line-height: 1.15; }
+      .cs-header { margin-bottom: 36px; }
+      .cs-eyebrow { font-size: 11px; }
+      .cs-hero-value { font-size: 28px; }
+      .scarcity { padding: 56px 20px; }
+      .scarcity h2 { font-size: clamp(22px, 6vw, 28px); }
+      .booking { padding: 56px 16px 72px; }
+      .booking h2 { font-size: clamp(22px, 6vw, 28px); }
+      .nav-cta { font-size: 11px; padding: 8px 12px; }
+      .ss-perspective { padding: 16px 8px; }
+      .ss-card { border-radius: 14px; padding: 8px; }
+      .ss-card-inner { padding: 8px; gap: 6px; }
+      .ss-kpi { padding: 10px; }
+      .ss-kpi-value { font-size: 16px; }
+      .ss-kpi-label, .ss-kpi-delta { font-size: 10px; }
     }
 
     /* ── BOOKING ── */
     .booking {
-      background: #fff; color: #0B0D14;
+      background: #0B0D14; color: #fff;
       padding: 80px 48px 100px;
       display: flex; flex-direction: column;
       align-items: center; gap: 14px;
@@ -434,32 +457,37 @@
     .booking-eyebrow {
       font-size: 11px; font-weight: 600;
       letter-spacing: 1.2px; text-transform: uppercase;
-      color: #9CA3AF;
+      color: rgba(255,255,255,0.5);
     }
     .booking h2 {
       font-size: clamp(26px, 2.8vw, 40px);
       font-weight: 800; letter-spacing: -0.8px;
-      color: #0B0D14; text-align: center;
+      color: #fff; text-align: center;
       max-width: 600px; line-height: 1.2;
     }
     .booking-sub {
-      font-size: 16px; color: #6B7280;
+      font-size: 16px; color: rgba(255,255,255,0.55);
       text-align: center; max-width: 460px;
       line-height: 1.65; margin-bottom: 10px;
     }
     .calendar-embed {
       width: 100%; max-width: 900px;
+      margin-top: 16px;
       border-radius: 16px; overflow: hidden;
-      border: 1px solid #E5E7EB;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.07);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 12px 48px rgba(0,0,0,0.5);
+      background: #fff;
     }
     .calendar-embed iframe {
-      width: 100%; height: 680px; border: none; display: block;
+      width: 100%; height: 600px; border: none; display: block;
+    }
+    @media (max-width: 640px) {
+      .calendar-embed iframe { height: 560px; }
     }
 
     /* ── SCARCITY ── */
     .scarcity {
-      background: #0B0D14;
+      background: #fff;
       padding: 72px 48px;
       display: flex;
       flex-direction: column;
@@ -474,7 +502,7 @@
       top: -100px; left: 50%;
       transform: translateX(-50%);
       width: 600px; height: 300px;
-      background: radial-gradient(ellipse, rgba(99,102,241,0.2) 0%, transparent 70%);
+      background: radial-gradient(ellipse, rgba(99,102,241,0.10) 0%, transparent 70%);
       pointer-events: none;
     }
     .scarcity-inner {
@@ -515,18 +543,18 @@
       font-size: clamp(24px, 2.8vw, 38px);
       font-weight: 800;
       letter-spacing: -0.8px;
-      color: #fff;
+      color: #0B0D14;
       line-height: 1.2;
     }
     .scarcity h2 span {
-      background: linear-gradient(90deg, #818cf8, #a78bfa);
+      background: linear-gradient(90deg, #6366f1, #8b5cf6);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
     .scarcity-sub {
       font-size: 16px;
-      color: rgba(255,255,255,0.5);
+      color: rgba(11,13,20,0.55);
       line-height: 1.65;
       max-width: 520px;
     }
@@ -540,38 +568,446 @@
       border-radius: 100px;
     }
     .slot.taken  { background: #ef4444; }
-    .slot.open   { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); }
+    .slot.open   { background: rgba(11,13,20,0.08); border: 1px solid rgba(11,13,20,0.15); }
     .slots-label {
       font-size: 13px;
-      color: rgba(255,255,255,0.35);
+      color: rgba(11,13,20,0.45);
       letter-spacing: 0.2px;
+    }
+
+    /* ── COMPLIANCE ── */
+    .compliance {
+      background: #fff;
+      color: #0B0D14;
+      padding: 88px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .compliance::before {
+      content: '';
+      position: absolute;
+      top: -120px; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 300px;
+      background: radial-gradient(ellipse, rgba(99,102,241,0.10) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .compliance-inner {
+      max-width: 760px; margin: 0 auto;
+      text-align: center; position: relative; z-index: 1;
+    }
+    .compliance-eyebrow {
+      display: inline-block;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 1.4px; text-transform: uppercase;
+      color: rgba(11,13,20,0.5);
+      margin-bottom: 16px;
+    }
+    .compliance h2 {
+      font-size: clamp(26px, 3vw, 38px);
+      font-weight: 800; letter-spacing: -0.8px;
+      line-height: 1.2; margin-bottom: 28px;
+      color: #0B0D14;
+    }
+    .compliance h2 span {
+      background: linear-gradient(90deg, #6366f1, #8b5cf6);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .compliance-body p {
+      font-size: 15px;
+      color: rgba(11,13,20,0.62);
+      line-height: 1.75;
+      margin-bottom: 14px;
+      text-align: left;
+    }
+    .compliance-body p strong {
+      color: #0B0D14; font-weight: 600;
+    }
+    .compliance-badges {
+      display: flex; flex-wrap: wrap;
+      justify-content: center; gap: 10px;
+      margin-top: 28px;
+    }
+    .compliance-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(11,13,20,0.04);
+      border: 1px solid rgba(11,13,20,0.1);
+      padding: 8px 14px; border-radius: 100px;
+      font-size: 12px; font-weight: 500;
+      color: rgba(11,13,20,0.75);
+    }
+    .compliance-badge svg { color: #16a34a; flex-shrink: 0; }
+    @media (max-width: 640px) {
+      .compliance { padding: 56px 20px; }
+      .compliance-body p { font-size: 14px; }
+      .compliance-badge { font-size: 11px; padding: 6px 12px; }
     }
 
     /* ── FOOTER ── */
     footer {
-      background: #fff; border-top: 1px solid #E5E7EB;
+      background: #0B0D14; border-top: 1px solid rgba(255,255,255,0.08);
       padding: 22px 48px;
       display: flex; align-items: center; justify-content: space-between;
     }
-    footer p, footer a { font-size: 13px; color: #9CA3AF; text-decoration: none; }
-    footer a:hover { color: #6B7280; }
+    footer p, footer a { font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; }
+    footer a:hover { color: rgba(255,255,255,0.75); }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 860px) {
-      nav { padding: 10px 20px; }
-      .partner-logo { height: 36px; }
+      /* ── Mobile header: compact, one line, clears hero cleanly ── */
+      nav {
+        padding: 10px 14px;
+        gap: 10px;
+      }
+      .nav-logo { font-size: 12px; line-height: 1.2; }
+      .nav-logo .nav-sub { display: none; }   /* hide subtitle */
+      .nav-link { display: none; }            /* hide centered link — nav too tight on mobile */
+      .nav-cta { font-size: 12px; padding: 8px 14px; white-space: nowrap; }
+
+      /* ── Mobile hero: 1 column, extra top padding so the badge
+           is never clipped by the fixed nav ── */
       .hero {
         grid-template-columns: 1fr;
         height: auto;
-        min-height: 100vh;
-        padding: 80px 20px 32px;
-        gap: 24px;
+        min-height: auto;
+        padding: 104px 20px 32px;
+        gap: 20px;
       }
       h1 { font-size: 22px; }
       .hero-sub { font-size: 12px; }
       .bullet { font-size: 12px; }
+
+      /* ── Reorder on mobile: headline → badges → video → sub / bullets / CTA.
+           Show the in-headline video, hide the right-column one. ── */
+      .video-mobile  { display: block; }
+      .video-desktop { display: none; }
+      .cert-badges-mobile { display: flex; }
+      .cert-badges-mobile img { height: 52px; }
+
       .booking { padding: 56px 20px 72px; }
       footer { flex-direction: column; gap: 6px; text-align: center; padding: 18px 20px; }
+    }
+
+    /* ── SCROLL SHOWCASE (3D-rotating dashboard preview, scroll-driven) ── */
+    .scroll-showcase {
+      position: relative;
+      background: linear-gradient(180deg, #0B0D14 0%, #0f1320 100%);
+      padding: 0 20px;
+    }
+    .ss-track {
+      height: 300vh;
+      display: block;
+      padding: 0;
+    }
+    .ss-perspective {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 100%;
+      max-width: none;
+      margin: 0 auto;
+      perspective: 1000px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      overflow: hidden;
+    }
+    .ss-header {
+      max-width: 64rem;
+      margin: 0 auto;
+      text-align: center;
+      padding-bottom: 0;
+      transform: translateY(var(--ss-translate, 0px));
+      opacity: var(--ss-opacity, 1);
+      will-change: transform, opacity;
+    }
+    .ss-header h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 36px;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.1;
+      letter-spacing: -1px;
+    }
+    .ss-headline-big {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: clamp(48px, 9vw, 96px);
+      font-weight: 800;
+      line-height: 1;
+      background: linear-gradient(135deg, #a5b4fc 0%, #fff 50%, #c4b5fd 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .ss-card {
+      max-width: 1100px;
+      margin: -28px auto 0;
+      height: 40rem;
+      border: 4px solid #6C6C6C;
+      border-radius: 30px;
+      background: #222;
+      padding: 24px;
+      box-shadow:
+        0 0 #0000004d,
+        0 9px 20px #0000004a,
+        0 37px 37px #00000042,
+        0 84px 50px #00000026,
+        0 149px 60px #0000000a,
+        0 233px 65px #00000003;
+      transform:
+        rotateX(var(--ss-rotate, 20deg))
+        scale(var(--ss-scale, 1.05));
+      transform-origin: center center;
+      opacity: var(--ss-opacity, 1);
+      will-change: transform, opacity;
+    }
+    .ss-card-inner {
+      height: 100%;
+      width: 100%;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #13161F 0%, #0B0D14 100%);
+      overflow: hidden;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto 1fr auto;
+      gap: 16px;
+    }
+    .ss-kpi {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .ss-kpi-label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .ss-kpi-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+      margin-top: 6px;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .ss-kpi-delta { font-size: 12px; color: #4ade80; margin-top: 4px; }
+    .ss-chart {
+      grid-column: 1 / -1;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      min-height: 0;
+    }
+    .ss-chart-title {
+      font-size: 13px;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 12px;
+    }
+    .ss-chart-svg { width: 100%; height: calc(100% - 28px); display: block; }
+    .ss-chart-line { fill: none; stroke: url(#ssGrad); stroke-width: 2.5; }
+    .ss-chart-fill { fill: url(#ssArea); }
+    .ss-table {
+      grid-column: 1 / -1;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: rgba(255,255,255,0.65);
+    }
+    @media (max-width: 768px) {
+      .ss-track { height: 250vh; padding: 0; }
+      .ss-perspective { padding: 20px 12px; }
+      .ss-card { height: 26rem; padding: 12px; border-radius: 20px; }
+      .ss-card-inner { padding: 12px; gap: 8px; grid-template-columns: repeat(2, 1fr); }
+      .ss-header h2 { font-size: 24px; }
+      .ss-kpi-value { font-size: 18px; }
+      .ss-kpi { padding: 12px; }
+      .ss-table { flex-direction: column; gap: 4px; }
+    }
+
+    /* ── SCENE PREVIEW (case-studies snapshot during cross-fade) ── */
+    .scene-preview {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      padding: 40px 24px;
+      opacity: var(--ss-preview-opacity, 0);
+      transform: scale(var(--ss-preview-scale, 2.4));
+      transform-origin: center center;
+      pointer-events: none;
+      will-change: transform, opacity;
+    }
+    .scene-preview-header {
+      text-align: center;
+      max-width: 800px;
+    }
+    .scene-preview-header .cs-eyebrow {
+      margin-bottom: 12px;
+    }
+    .scene-preview-h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 48px;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.05;
+      color: #fff;
+    }
+    .scene-preview-h2 span {
+      background: linear-gradient(135deg, #a5b4fc 0%, #fff 50%, #c4b5fd 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .scene-preview-cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 280px));
+      gap: 20px;
+      width: 100%;
+      max-width: 900px;
+    }
+    .scene-preview-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-height: 180px;
+    }
+    .scene-preview-tag {
+      align-self: flex-start;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.6px;
+      color: rgba(255,255,255,0.65);
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.06);
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+    .scene-preview-label {
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      margin-top: auto;
+    }
+    .scene-preview-value {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: #4ade80;
+      letter-spacing: -0.5px;
+    }
+    @media (max-width: 768px) {
+      .scene-preview { gap: 14px; padding: 20px 12px; }
+      .scene-preview-h2 { font-size: 26px; }
+      .scene-preview-cards { grid-template-columns: 1fr; gap: 8px; max-width: 320px; }
+      .scene-preview-card { min-height: 90px; padding: 14px; gap: 8px; }
+      .scene-preview-value { font-size: 22px; }
+    }
+    /* dark fade-through overlay during cross-fade between dashboard and preview */
+    .scene-dark {
+      position: absolute;
+      inset: 0;
+      background: #000;
+      opacity: var(--ss-dark-opacity, 0);
+      pointer-events: none;
+      will-change: opacity;
+      z-index: 2;
+    }
+
+    /* ── FLOATING SHAPES (decorative ambient pills, fade-in then Y oscillation) ── */
+    .floating-bg {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .shape-wrap {
+      position: absolute;
+      opacity: 0;
+      animation: shape-entry 2.4s cubic-bezier(0.23, 0.86, 0.39, 0.96) var(--shape-delay, 0s) both;
+      will-change: transform, opacity;
+    }
+    .shape-float {
+      animation: shape-float 12s ease-in-out infinite;
+      will-change: transform;
+    }
+    .shape-pill {
+      width: var(--shape-w);
+      height: var(--shape-h);
+      border-radius: 9999px;
+      background: linear-gradient(to right, var(--shape-grad), transparent);
+      -webkit-backdrop-filter: blur(2px);
+      backdrop-filter: blur(2px);
+      border: 2px solid rgba(255,255,255,0.15);
+      box-shadow: 0 8px 32px 0 rgba(255,255,255,0.1);
+      position: relative;
+    }
+    .shape-pill::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 9999px;
+      background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2), transparent 70%);
+      pointer-events: none;
+    }
+    @keyframes shape-entry {
+      from {
+        opacity: 0;
+        transform: translateY(-150px) rotate(var(--shape-rot-from, 0deg));
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) rotate(var(--shape-rot-to, 0deg));
+      }
+    }
+    @keyframes shape-float {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(15px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .shape-wrap, .shape-float { animation: none; }
+      .shape-wrap { opacity: 1; transform: none; }
+    }
+    /* keep existing content above the floating layer */
+    .hero { position: relative; z-index: 1; }
+    .booking { position: relative; overflow: hidden; }
+    .booking > *:not(.floating-bg) { position: relative; z-index: 1; }
+
+    /* ── FADE-UP TEXT (matches fadeUpVariants from the source component) ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition:
+        opacity 1s cubic-bezier(0.25, 0.4, 0.25, 1) var(--fade-delay, 0s),
+        transform 1s cubic-bezier(0.25, 0.4, 0.25, 1) var(--fade-delay, 0s);
+    }
+    .fade-up.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .fade-up { opacity: 1; transform: none; transition: none; }
     }
   </style>
 </head>
@@ -581,30 +1017,71 @@
 <nav>
   <a class="nav-logo" href="#">
     Amazon Apex 9-Figure Operating System&#8482;
-    <span class="nav-sub">Ein Produkt der Apex Operating Company LLC</span>
+    <span class="nav-sub">Ein Produkt der Apex Operating Company</span>
   </a>
-  <div class="nav-center">
-    <img src="logos/partner-logo.png" alt="Verified Partner" class="partner-logo" />
+  <div class="nav-actions">
+    <a class="nav-link" href="#resultate">Resultate</a>
+    <a class="nav-cta nav-cta-wa" href="https://wa.me/4917620266087" target="_blank" rel="noopener" aria-label="Kontakt via WhatsApp">
+      <svg width="14" height="14" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+        <path d="M16.003 0C7.184 0 .015 7.169.015 15.988c0 2.817.74 5.567 2.146 7.987L0 32l8.196-2.144a15.93 15.93 0 0 0 7.807 1.991h.006c8.819 0 15.988-7.169 15.988-15.988 0-4.272-1.664-8.288-4.688-11.312A15.882 15.882 0 0 0 16.003 0zm-.001 29.176c-2.396 0-4.736-.643-6.78-1.859l-.486-.289-5.018 1.312 1.34-4.892-.317-.502a13.236 13.236 0 0 1-2.027-7.046c0-7.301 5.94-13.241 13.241-13.241 3.539 0 6.864 1.379 9.367 3.882a13.183 13.183 0 0 1 3.882 9.366c0 7.301-5.94 13.241-13.241 13.241zm7.262-9.91c-.398-.199-2.354-1.162-2.719-1.294-.365-.133-.631-.199-.896.199-.265.398-1.029 1.294-1.262 1.559-.232.265-.464.299-.862.099-.398-.199-1.68-.62-3.2-1.974-1.183-1.055-1.983-2.357-2.215-2.755-.232-.398-.025-.613.174-.811.18-.179.398-.464.597-.696.199-.232.265-.398.398-.663.133-.265.066-.498-.033-.696-.099-.199-.896-2.16-1.228-2.957-.323-.776-.65-.671-.896-.683l-.763-.014c-.265 0-.696.099-1.061.498-.365.398-1.394 1.361-1.394 3.32 0 1.96 1.427 3.853 1.626 4.118.199.265 2.808 4.287 6.802 6.011.949.41 1.69.654 2.268.838.953.302 1.821.26 2.507.158.765-.114 2.354-.962 2.687-1.892.331-.929.331-1.726.232-1.892-.099-.166-.365-.265-.763-.464z"/>
+      </svg>
+      Kontakt
+    </a>
+    <a class="nav-cta" href="https://calendar.app.google/f9ft5VoZprysf9gd8" target="_blank" rel="noopener">Gespräch buchen →</a>
   </div>
-  <a class="nav-cta" href="#booking">Gespräch buchen →</a>
 </nav>
 
 <!-- HERO -->
 <div class="hero-wrapper">
+<div class="floating-bg" aria-hidden="true">
+  <div class="shape-wrap" style="left:-10%; top:15%; --shape-delay:0.3s; --shape-rot-from:-3deg; --shape-rot-to:12deg;">
+    <div class="shape-float"><div class="shape-pill" style="--shape-w:600px; --shape-h:140px; --shape-grad:rgba(99,102,241,0.15);"></div></div>
+  </div>
+  <div class="shape-wrap" style="right:-5%; top:70%; --shape-delay:0.5s; --shape-rot-from:-30deg; --shape-rot-to:-15deg;">
+    <div class="shape-float"><div class="shape-pill" style="--shape-w:500px; --shape-h:120px; --shape-grad:rgba(244,63,94,0.15);"></div></div>
+  </div>
+  <div class="shape-wrap" style="left:5%; bottom:5%; --shape-delay:0.4s; --shape-rot-from:-23deg; --shape-rot-to:-8deg;">
+    <div class="shape-float"><div class="shape-pill" style="--shape-w:300px; --shape-h:80px; --shape-grad:rgba(139,92,246,0.15);"></div></div>
+  </div>
+  <div class="shape-wrap" style="right:15%; top:10%; --shape-delay:0.6s; --shape-rot-from:5deg; --shape-rot-to:20deg;">
+    <div class="shape-float"><div class="shape-pill" style="--shape-w:200px; --shape-h:60px; --shape-grad:rgba(245,158,11,0.15);"></div></div>
+  </div>
+  <div class="shape-wrap" style="left:20%; top:5%; --shape-delay:0.7s; --shape-rot-from:-40deg; --shape-rot-to:-25deg;">
+    <div class="shape-float"><div class="shape-pill" style="--shape-w:150px; --shape-h:40px; --shape-grad:rgba(6,182,212,0.15);"></div></div>
+  </div>
+</div>
 <section class="hero">
-  <div class="hero-left">
-    <div class="badge">
+  <div class="hero-left" data-fade-group>
+    <div class="badge fade-up" style="--fade-delay:0.5s">
       <span class="badge-dot"></span>
       Done For You · Plug &amp; Play
     </div>
 
-    <h1>Willst du ein <span class="gradient-word">Plug&nbsp;&amp;&nbsp;Play</span> <span class="gradient-word">System</span> von <span class="gradient-word">9-stelligen</span> Amazon <span class="gradient-word">Sellern</span> &amp; <span class="gradient-word">Vendoren</span> in deinem Unternehmen installieren?</h1>
+    <h1 class="fade-up" style="--fade-delay:0.7s">Willst du ein <span class="gradient-word">Plug&nbsp;&amp;&nbsp;Play</span> <span class="gradient-word">System</span> von <span class="gradient-word">9-stelligen</span> Amazon <span class="gradient-word">Sellern</span> &amp; <span class="gradient-word">Vendoren</span> in deinem Unternehmen installieren?</h1>
 
-    <p class="hero-sub">
+    <!-- CERT BADGES (mobile-only, above the in-headline video) -->
+    <div class="cert-badges cert-badges-mobile fade-up" style="--fade-delay:0.78s">
+      <img src="logos/claude-certified.jpeg" alt="Claude Certified Architect" />
+      <img src="logos/partner-logo.png" alt="Amazon Ads Verified Partner" />
+      <img src="logos/google-cloud-certified.png" alt="Google Cloud Certified — Professional Cloud Developer" />
+    </div>
+
+    <!-- VIDEO (mobile-only, sits right after the headline; desktop uses the right-column video below) -->
+    <div class="video-wrapper video-mobile fade-up" style="--fade-delay:0.8s">
+      <iframe
+        src="https://www.youtube.com/embed/MZ1VQ3E_m0I?rel=0&modestbranding=1"
+        title="9-Figure Amazon Operating System demo"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        loading="lazy"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <p class="hero-sub fade-up" style="--fade-delay:0.9s">
       Die exakten Prozesse, Dashboards und SOPs, von 9-stelligen Sellern und Vendoren — einsatzbereit, in deinem Setup, ASAP.
     </p>
 
-    <div class="bullets">
+    <div class="bullets fade-up" style="--fade-delay:1.1s">
       <div class="bullet">
         <div class="bullet-icon">
           <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#4ADE80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -637,7 +1114,7 @@
       </div>
     </div>
 
-    <div class="cta-row">
+    <div class="cta-row fade-up" style="--fade-delay:1.3s">
       <a class="btn-primary" href="#booking">
         Jetzt Qualifikationsgespräch buchen
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -645,14 +1122,19 @@
         </svg>
       </a>
     </div>
-    <p class="trust-text">Keine Agentur. Keine Haken. Nur Systeme. Nur Leistung. Nur Inhouse und strategische Beratung.</p>
+    <p class="trust-text fade-up" style="--fade-delay:1.5s">Keine Agentur. Keine Haken. Nur Systeme. Nur Leistung. Nur Inhouse und strategische Beratung.</p>
   </div>
 
-  <!-- VIDEO RIGHT -->
-  <div>
+  <!-- VIDEO RIGHT (desktop-only — on mobile we show the copy above inside hero-left) -->
+  <div class="video-desktop fade-up" style="--fade-delay:0.7s">
+    <div class="cert-badges">
+      <img src="logos/claude-certified.jpeg" alt="Claude Certified Architect" />
+      <img src="logos/partner-logo.png" alt="Amazon Ads Verified Partner" />
+      <img src="logos/google-cloud-certified.png" alt="Google Cloud Certified — Professional Cloud Developer" />
+    </div>
     <div class="video-wrapper">
       <iframe
-        src="https://www.youtube.com/embed/5BvM-RFpX0k?rel=0&modestbranding=1"
+        src="https://www.youtube.com/embed/MZ1VQ3E_m0I?rel=0&modestbranding=1"
         title="9-Figure Amazon Operating System demo"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen>
@@ -690,19 +1172,95 @@
   </div>
 </div>
 
+<!-- SCROLL ANIMATION SHOWCASE -->
+<section class="scroll-showcase">
+  <div class="ss-track" id="scrollShowcase">
+    <div class="ss-perspective">
+      <div class="ss-header">
+        <h2>Dein 9-stelliges<br/>
+          <span class="ss-headline-big">Operating System</span>
+        </h2>
+      </div>
+      <div class="ss-card">
+        <div class="ss-card-inner">
+          <div class="ss-kpi">
+            <div class="ss-kpi-label">Umsatz MTD</div>
+            <div class="ss-kpi-value">€2,847,392</div>
+            <div class="ss-kpi-delta">▲ 18.4%</div>
+          </div>
+          <div class="ss-kpi">
+            <div class="ss-kpi-label">TACoS</div>
+            <div class="ss-kpi-value">7.2%</div>
+            <div class="ss-kpi-delta">▲ 1.8 pp</div>
+          </div>
+          <div class="ss-kpi">
+            <div class="ss-kpi-label">Conversion</div>
+            <div class="ss-kpi-value">14.6%</div>
+            <div class="ss-kpi-delta">▲ 2.3%</div>
+          </div>
+          <div class="ss-kpi">
+            <div class="ss-kpi-label">Buy Box</div>
+            <div class="ss-kpi-value">98.4%</div>
+            <div class="ss-kpi-delta">▲ 0.6%</div>
+          </div>
+          <div class="ss-chart">
+            <div class="ss-chart-title">Umsatzverlauf · Letzte 30 Tage</div>
+            <svg class="ss-chart-svg" viewBox="0 0 600 160" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="ssGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#a5b4fc"/>
+                  <stop offset="100%" stop-color="#c4b5fd"/>
+                </linearGradient>
+                <linearGradient id="ssArea" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="rgba(165,180,252,0.35)"/>
+                  <stop offset="100%" stop-color="rgba(165,180,252,0)"/>
+                </linearGradient>
+              </defs>
+              <path class="ss-chart-fill" d="M0,120 L40,110 L80,95 L120,100 L160,80 L200,82 L240,65 L280,70 L320,55 L360,48 L400,52 L440,38 L480,30 L520,32 L560,18 L600,22 L600,160 L0,160 Z"/>
+              <path class="ss-chart-line" d="M0,120 L40,110 L80,95 L120,100 L160,80 L200,82 L240,65 L280,70 L320,55 L360,48 L400,52 L440,38 L480,30 L520,32 L560,18 L600,22"/>
+            </svg>
+          </div>
+          <div class="ss-table">
+            <span>Top SKU: AMZ-OS-PRO · 412 Verkäufe heute</span>
+            <span>Live · Synced 14:32</span>
+          </div>
+        </div>
+      </div>
+      <div class="scene-dark" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+
 <!-- CASE STUDIES -->
-<section class="case-studies">
+<section class="case-studies" id="resultate">
+  <div class="floating-bg" aria-hidden="true">
+    <div class="shape-wrap" style="left:-10%; top:15%; --shape-delay:0.3s; --shape-rot-from:-3deg; --shape-rot-to:12deg;">
+      <div class="shape-float"><div class="shape-pill" style="--shape-w:600px; --shape-h:140px; --shape-grad:rgba(99,102,241,0.15);"></div></div>
+    </div>
+    <div class="shape-wrap" style="right:-5%; top:70%; --shape-delay:0.5s; --shape-rot-from:-30deg; --shape-rot-to:-15deg;">
+      <div class="shape-float"><div class="shape-pill" style="--shape-w:500px; --shape-h:120px; --shape-grad:rgba(244,63,94,0.15);"></div></div>
+    </div>
+    <div class="shape-wrap" style="left:5%; bottom:5%; --shape-delay:0.4s; --shape-rot-from:-23deg; --shape-rot-to:-8deg;">
+      <div class="shape-float"><div class="shape-pill" style="--shape-w:300px; --shape-h:80px; --shape-grad:rgba(139,92,246,0.15);"></div></div>
+    </div>
+    <div class="shape-wrap" style="right:15%; top:10%; --shape-delay:0.6s; --shape-rot-from:5deg; --shape-rot-to:20deg;">
+      <div class="shape-float"><div class="shape-pill" style="--shape-w:200px; --shape-h:60px; --shape-grad:rgba(245,158,11,0.15);"></div></div>
+    </div>
+    <div class="shape-wrap" style="left:20%; top:5%; --shape-delay:0.7s; --shape-rot-from:-40deg; --shape-rot-to:-25deg;">
+      <div class="shape-float"><div class="shape-pill" style="--shape-w:150px; --shape-h:40px; --shape-grad:rgba(6,182,212,0.15);"></div></div>
+    </div>
+  </div>
   <div class="cs-inner">
-    <div class="cs-header">
-      <span class="cs-eyebrow">Bewiesene Ergebnisse</span>
-      <h2>Echte Zahlen.<br/><span>Echte Kunden.</span></h2>
-      <p>Keine Hochglanz-Versprechen. Nur verifizierte Resultate aus realen Projekten mit 7-, 8- und 9-stelligen Marken.</p>
+    <div class="cs-header" data-fade-group>
+      <span class="cs-eyebrow fade-up">Bewiesene Ergebnisse</span>
+      <h2 class="fade-up" style="--fade-delay:0.2s">Echte Zahlen.<br/><span>Echte Kunden.</span></h2>
+      <p class="fade-up" style="--fade-delay:0.4s">Keine Hochglanz-Versprechen. Nur verifizierte Resultate aus realen Projekten mit 7-, 8- und 9-stelligen Marken.</p>
     </div>
 
     <div class="cs-grid">
 
       <!-- Card 1: SSE Photo Video -->
-      <div class="cs-card">
+      <div class="cs-card fade-up">
         <div class="cs-card-top">
           <span class="cs-tag">PPC · Amazon Ads</span>
           <span class="cs-time">64 Tage</span>
@@ -736,7 +1294,7 @@
       </div>
 
       <!-- Card 2: EcoTeas -->
-      <div class="cs-card">
+      <div class="cs-card fade-up">
         <div class="cs-card-top">
           <span class="cs-tag">PPC · TACoS</span>
           <span class="cs-time">5 Monate</span>
@@ -774,7 +1332,7 @@
       </div>
 
       <!-- Card 3: SeroVital -->
-      <div class="cs-card">
+      <div class="cs-card fade-up">
         <div class="cs-card-top">
           <span class="cs-tag">PPC · Skalierung</span>
           <span class="cs-time">7 Monate</span>
@@ -812,7 +1370,7 @@
       </div>
 
       <!-- Card 4: Anonymous German KDP Brand -->
-      <div class="cs-card">
+      <div class="cs-card fade-up">
         <div class="cs-card-top">
           <span class="cs-tag">Amazon KDP · PPC</span>
           <span class="cs-time">12 Monate</span>
@@ -850,7 +1408,7 @@
       </div>
 
       <!-- Card 5: British Luxury Brand (Scriveiner, anonymized) -->
-      <div class="cs-card">
+      <div class="cs-card fade-up">
         <div class="cs-card-top">
           <span class="cs-tag">Supply Chain · Fractional CMO</span>
           <span class="cs-time">2023</span>
@@ -886,7 +1444,7 @@
       </div>
 
       <!-- Card 6: Glart -->
-      <div class="cs-card">
+      <div class="cs-card fade-up">
         <div class="cs-card-top">
           <span class="cs-tag">Vendor · Automotive</span>
           <span class="cs-time">YTD YoY · Amazon DE</span>
@@ -936,62 +1494,272 @@
   </div>
 </section>
 
-<!-- BOOKING -->
-<section class="booking" id="booking">
-  <p class="booking-eyebrow">Kostenlos · 30 Minuten</p>
-  <h2>Qualifikationsgespräch vereinbaren.</h2>
-  <p class="booking-sub">
-    30 Minuten. Kein Pitch. Ein ehrliches Gespräch darüber, was in deinem Amazon-Business gerade Systeme braucht.
-  </p>
-  <p style="font-size:13px;color:#9CA3AF;text-align:center;max-width:480px;line-height:1.65;margin-top:-4px;">
-    <strong style="color:#6B7280;">Wichtiger Hinweis:</strong> Wir können nicht jedem Unternehmen helfen. Wenn wir keine hohe Erfolgswahrscheinlichkeit für eine Zusammenarbeit sehen, lehnen wir das Projekt ab — in deinem und unserem Interesse.
-  </p>
-
-  <div class="calendar-embed">
-    <!--
-      GOOGLE CALENDAR:
-      calendar.google.com → Terminplanung → Link kopieren → hier einsetzen
-      src="https://calendar.google.com/calendar/appointments/schedules/DEINE_ID?gv=true"
-
-      CALENDLY (Alternative):
-      src="https://calendly.com/DEIN-NAME/30min"
-    -->
-    <iframe src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3QxLPHocbLtivzrN_56nZqGTDaudQxv4g9aKP_zHvQ80DIWl83MIf6fP2cgAsX15pYOucLtu6I?gv=true" style="border: 0" width="100%" height="600" frameborder="0"></iframe>
-  </div>
-</section>
-
 <!-- SCARCITY -->
-<section class="scarcity">
+<section class="scarcity" data-fade-group>
   <div class="scarcity-inner">
-    <div class="scarcity-badge">
+    <div class="scarcity-badge fade-up">
       <span class="scarcity-dot"></span>
       Limitierte Kapazität
     </div>
-    <h2>Wir arbeiten maximal mit <span>5 neuen Kunden</span> pro Monat zusammen.</h2>
-    <p class="scarcity-sub">
+    <h2 class="fade-up" style="--fade-delay:0.2s">Wir arbeiten maximal mit <span>5 neuen Kunden</span> pro Monat zusammen.</h2>
+    <p class="scarcity-sub fade-up" style="--fade-delay:0.4s">
       Qualität ist kein Versprechen — es ist eine Entscheidung. Deshalb begrenzen wir unsere Kapazität bewusst. Jedes Projekt bekommt volle Aufmerksamkeit, echte Seniorität und messbare Ergebnisse.
     </p>
-    <div class="slots-row">
+    <div class="slots-row fade-up" style="--fade-delay:0.6s">
       <div class="slot taken"></div>
       <div class="slot taken"></div>
       <div class="slot taken"></div>
       <div class="slot open"></div>
       <div class="slot open"></div>
     </div>
-    <p class="slots-label">3 von 5 Plätzen für April belegt</p>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="booking" id="booking" data-fade-group>
+  <div class="floating-bg" aria-hidden="true">
+    <div class="shape-wrap" style="left:-10%; top:15%; --shape-delay:0.3s; --shape-rot-from:-3deg; --shape-rot-to:12deg;">
+      <div class="shape-float"><div class="shape-pill" style="--shape-w:600px; --shape-h:140px; --shape-grad:rgba(99,102,241,0.18);"></div></div>
+    </div>
+    <div class="shape-wrap" style="right:-5%; top:70%; --shape-delay:0.5s; --shape-rot-from:-30deg; --shape-rot-to:-15deg;">
+      <div class="shape-float"><div class="shape-pill" style="--shape-w:500px; --shape-h:120px; --shape-grad:rgba(244,63,94,0.18);"></div></div>
+    </div>
+    <div class="shape-wrap" style="left:5%; bottom:5%; --shape-delay:0.4s; --shape-rot-from:-23deg; --shape-rot-to:-8deg;">
+      <div class="shape-float"><div class="shape-pill" style="--shape-w:300px; --shape-h:80px; --shape-grad:rgba(139,92,246,0.18);"></div></div>
+    </div>
+    <div class="shape-wrap" style="right:15%; top:10%; --shape-delay:0.6s; --shape-rot-from:5deg; --shape-rot-to:20deg;">
+      <div class="shape-float"><div class="shape-pill" style="--shape-w:200px; --shape-h:60px; --shape-grad:rgba(245,158,11,0.18);"></div></div>
+    </div>
+    <div class="shape-wrap" style="left:20%; top:5%; --shape-delay:0.7s; --shape-rot-from:-40deg; --shape-rot-to:-25deg;">
+      <div class="shape-float"><div class="shape-pill" style="--shape-w:150px; --shape-h:40px; --shape-grad:rgba(6,182,212,0.18);"></div></div>
+    </div>
+  </div>
+  <p class="booking-eyebrow fade-up">Kostenlos · 30 Minuten</p>
+  <h2 class="fade-up" style="--fade-delay:0.2s">Qualifikationsgespräch vereinbaren.</h2>
+  <p class="booking-sub fade-up" style="--fade-delay:0.4s">
+    30 Minuten. Kein Pitch. Ein ehrliches Gespräch darüber, was in deinem Amazon-Business gerade Systeme braucht.
+  </p>
+  <p class="fade-up" style="font-size:13px;color:rgba(255,255,255,0.45);text-align:center;max-width:480px;line-height:1.65;margin-top:-4px;--fade-delay:0.6s">
+    <strong style="color:rgba(255,255,255,0.7);">Wichtiger Hinweis:</strong> Wir können nicht jedem Unternehmen helfen. Wenn wir keine hohe Erfolgswahrscheinlichkeit für eine Zusammenarbeit sehen, lehnen wir das Projekt ab — in deinem und unserem Interesse.
+  </p>
+
+  <!-- Google Calendar Appointment Scheduling begin -->
+  <div class="calendar-embed fade-up" style="--fade-delay:0.8s">
+    <iframe src="https://calendar.google.com/calendar/appointments/AcZssZ2jPqK-Ubq0ASrVE8jCqTEzTbLcXa4BphFR94Q=?gv=true" style="border: 0" width="100%" height="600" frameborder="0"></iframe>
+  </div>
+  <!-- end Google Calendar Appointment Scheduling -->
+
+</section>
+
+<!-- COMPLIANCE / TRUST -->
+<section class="compliance" data-fade-group>
+  <div class="compliance-inner">
+    <span class="compliance-eyebrow fade-up">Vertrauen &amp; Compliance</span>
+    <h2 class="fade-up" style="--fade-delay:0.2s">Apex Operating Company LLC — <span>100% rechtskonform</span>.</h2>
+    <div class="compliance-body fade-up" style="--fade-delay:0.4s">
+      <p>Verständliches Anliegen: <strong>"LLC"</strong> klingt für viele europäische Unternehmer nach Grauzone. In der Realität ist es das genaue Gegenteil. Wir sind <strong>100% konform mit der European Commission's Directorate-General for Trade and Economic Security</strong> und führen unsere Steuern vollständig und akkurat ab — weil unser Ruf das wichtigste Asset ist, das wir besitzen.</p>
+      <p>Die pauschale Annahme <strong>"dubiose LLCs"</strong> ist intellektuell unsauber. Eine LLC ist eine reguläre US-Entität — <strong>genau wie Google LLC, Anthropic LLC oder Meta Platforms</strong>. Jeder kann jederzeit über die <strong>Federal Trade Commission (FTC)</strong> Konflikte an eine höhere Autorität eskalieren.</p>
+    </div>
+    <div class="compliance-badges fade-up" style="--fade-delay:0.6s">
+      <span class="compliance-badge">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        EU DG Trade konform
+      </span>
+      <span class="compliance-badge">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        IRS-registriert
+      </span>
+      <span class="compliance-badge">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        FTC-überprüfbar
+      </span>
+      <span class="compliance-badge">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Steuerlich vollständig
+      </span>
+    </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <p>© 2026 Apex Operating Company LLC. Alle Rechte vorbehalten.</p>
+  <p>© 2026 Apex Operating Company LLC. Alle Rechte vorbehalten. <span style="color:rgba(255,255,255,0.35);">· EIN: 30-1323533</span></p>
   <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:center;">
     <a href="impressum.html">Impressum</a>
     <a href="datenschutz.html">Datenschutz</a>
     <a href="agb.html">AGB</a>
-    <a href="mailto:paul@apexoperatingcompany.com">paul@apexoperatingcompany.com</a>
   </div>
 </footer>
+
+<script>
+(function () {
+  var showcase = document.getElementById('scrollShowcase');
+  if (!showcase) return;
+  var caseStudies = document.querySelector('.case-studies');
+  if (caseStudies) {
+    // pull case-studies up so it sits exactly at pin-release scroll position
+    caseStudies.style.marginTop = '-100vh';
+    caseStudies.style.opacity = '0';
+    if (!caseStudies.style.position) caseStudies.style.position = 'relative';
+    caseStudies.style.zIndex = '2';
+    caseStudies.style.transformOrigin = 'center top';
+    caseStudies.style.willChange = 'transform, opacity';
+    caseStudies.style.backfaceVisibility = 'hidden';
+    caseStudies.style.webkitBackfaceVisibility = 'hidden';
+    // pre-mark internal fade-up children visible — case-studies is the
+    // zoom-out subject, so its content must already be settled when it appears
+    caseStudies.querySelectorAll('.fade-up').forEach(function (el) {
+      el.classList.add('is-visible');
+    });
+    // strip backdrop-filter from floating shapes inside case-studies — it's
+    // re-evaluated every frame during scale animation and is the main cause of stutter
+    caseStudies.querySelectorAll('.shape-pill').forEach(function (el) {
+      el.style.backdropFilter = 'none';
+      el.style.webkitBackdropFilter = 'none';
+    });
+  }
+  // floating-shape elements inside case-studies — pause their infinite Y-float
+  // while the pin scene is active so the GPU isn't compositing them every frame
+  // alongside the parent scale animation
+  var csShapeFloats = caseStudies ? caseStudies.querySelectorAll('.shape-float') : [];
+  var lastShapesPaused = null;
+  var raf = null;
+  function update() {
+    var rect = showcase.getBoundingClientRect();
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    var stickyArc = Math.max(1, rect.height - vh);
+    var p = Math.max(0, Math.min(1, -rect.top / stickyArc));
+    var isMobile = window.innerWidth <= 768;
+    var currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+    var pinReleaseY = (rect.top + currentScrollY) + stickyArc;
+
+    var flatStart = isMobile ? 0.7 : 1.05;
+    var flatEnd   = isMobile ? 0.9 : 1;
+    var zoomEnd   = isMobile ? 1.7 : 2.4;
+
+    var rotate = 0, scale = flatEnd, translate = -50;
+    var dashOpacity = 1, darkOpacity = 0;
+    var csOpacity = 0, csScale = zoomEnd;
+
+    if (p < 0.25) {
+      // Phase 1: lay flat
+      var p1 = p / 0.25;
+      rotate = 20 - 20 * p1;
+      scale = flatStart + (flatEnd - flatStart) * p1;
+      translate = -50 * p1;
+    } else if (p < 0.48) {
+      // Phase 2 + 3a overlap: zoom in 0.25→0.40, darken 0.25→0.48 (starts as soon as flat)
+      if (p < 0.40) {
+        var p2 = (p - 0.25) / 0.15;
+        scale = flatEnd + (zoomEnd - flatEnd) * p2;
+      } else {
+        scale = zoomEnd;
+      }
+      var p3a = (p - 0.25) / 0.23;
+      dashOpacity = 1 - p3a;
+      darkOpacity = p3a;
+    } else if (p < 0.58) {
+      // Phase 3b: black fades to case-studies (at scale 2.4)
+      var p3b = (p - 0.48) / 0.10;
+      scale = zoomEnd;
+      dashOpacity = 0;
+      darkOpacity = 1 - p3b;
+      csOpacity = p3b;
+      csScale = zoomEnd;
+    } else {
+      // Phase 4: case-studies zooms out from 2.4 to 1 (linear — even per-pixel
+      // change avoids front-loaded jumps that show up on each mouse-wheel tick)
+      var p4 = (p - 0.58) / (1 - 0.58);
+      scale = zoomEnd;
+      dashOpacity = 0;
+      csOpacity = 1;
+      csScale = zoomEnd + (1 - zoomEnd) * p4;
+    }
+
+    showcase.style.setProperty('--ss-rotate', rotate + 'deg');
+    showcase.style.setProperty('--ss-scale', scale);
+    showcase.style.setProperty('--ss-translate', translate + 'px');
+    showcase.style.setProperty('--ss-opacity', dashOpacity);
+    showcase.style.setProperty('--ss-dark-opacity', darkOpacity);
+    showcase.style.setProperty('--ss-preview-opacity', 0);
+    showcase.style.setProperty('--ss-preview-scale', 1);
+
+    if (caseStudies) {
+      // keep case-studies visually anchored near viewport top while it scales,
+      // with extra breathing room above when scaled up so the header has space
+      var csTranslate;
+      if (p >= 1) {
+        csTranslate = 0;
+      } else {
+        var anchor = currentScrollY - pinReleaseY;
+        var breathingRoom = (csScale - 1) * 60;
+        csTranslate = anchor + breathingRoom;
+      }
+      var actualScale = (p >= 1) ? 1 : csScale;
+      var actualOpacity = (p >= 1) ? 1 : csOpacity;
+      caseStudies.style.opacity = actualOpacity;
+      // translate3d (instead of translateY) forces a dedicated GPU layer,
+      // so the scale animation composites instead of repainting every frame
+      caseStudies.style.transform = 'translate3d(0, ' + csTranslate + 'px, 0) scale(' + actualScale + ')';
+    }
+    // toggle floating-shape animations only when state changes (avoid per-frame style writes)
+    var shapesPaused = (p < 1);
+    if (shapesPaused !== lastShapesPaused) {
+      var state = shapesPaused ? 'paused' : 'running';
+      for (var i = 0; i < csShapeFloats.length; i++) {
+        csShapeFloats[i].style.animationPlayState = state;
+      }
+      lastShapesPaused = shapesPaused;
+    }
+    raf = null;
+  }
+  function onScroll() {
+    if (raf) return;
+    raf = requestAnimationFrame(update);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  update();
+})();
+
+(function () {
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.fade-up').forEach(function (el) { el.classList.add('is-visible'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      if (e.target.hasAttribute('data-fade-group')) {
+        e.target.querySelectorAll('.fade-up').forEach(function (el) { el.classList.add('is-visible'); });
+      } else {
+        e.target.classList.add('is-visible');
+      }
+      io.unobserve(e.target);
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('[data-fade-group]').forEach(function (g) { io.observe(g); });
+  document.querySelectorAll('.fade-up').forEach(function (el) {
+    if (!el.closest('[data-fade-group]')) io.observe(el);
+  });
+})();
+
+(function () {
+  // "Resultate" nav link — the case-studies section carries a scroll-driven
+  // transform, so a native #anchor mis-targets. Scroll to the pin-release
+  // position instead, where case-studies is shown at its natural size.
+  var link = document.querySelector('.nav-link[href="#resultate"]');
+  var showcase = document.getElementById('scrollShowcase');
+  if (!link || !showcase) return;
+  link.addEventListener('click', function (e) {
+    e.preventDefault();
+    var rect = showcase.getBoundingClientRect();
+    var showcaseTop = rect.top + (window.pageYOffset || document.documentElement.scrollTop);
+    var stickyArc = Math.max(1, showcase.offsetHeight - window.innerHeight);
+    window.scrollTo({ top: showcaseTop + stickyArc, behavior: 'smooth' });
+  });
+})();
+</script>
 
 </body>
 </html>
