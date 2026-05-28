@@ -223,9 +223,12 @@
       border: 1px solid var(--border);
       box-shadow: 0 32px 80px rgba(0,0,0,0.55);
     }
-    .video-wrapper iframe {
+    .video-wrapper iframe,
+    .video-wrapper video {
       position: absolute; top: 0; left: 0;
       width: 100%; height: 100%; border: none;
+      object-fit: cover;
+      background: #000;
     }
     .video-mobile { display: none; }
 
@@ -1066,15 +1069,12 @@
       <img src="logos/google-cloud-certified.png" alt="Google Cloud Certified — Professional Cloud Developer" />
     </div>
 
-    <!-- VIDEO (mobile-only, sits right after the headline; desktop uses the right-column video below) -->
+    <!-- VIDEO (mobile-only) — self-hosted MP4 to bypass YouTube embed restrictions -->
     <div class="video-wrapper video-mobile fade-up" style="--fade-delay:0.8s">
-      <iframe
-        src="https://www.youtube.com/embed/MZ1VQ3E_m0I?rel=0&modestbranding=1"
-        title="9-Figure Amazon Operating System demo"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        loading="lazy"
-        allowfullscreen>
-      </iframe>
+      <video controls preload="metadata" playsinline poster="vsl-poster.jpg">
+        <source src="vsl.mp4" type="video/mp4">
+        Dein Browser unterstützt eingebettete Videos nicht.
+      </video>
     </div>
 
     <p class="hero-sub fade-up" style="--fade-delay:0.9s">
@@ -1133,12 +1133,10 @@
       <img src="logos/google-cloud-certified.png" alt="Google Cloud Certified — Professional Cloud Developer" />
     </div>
     <div class="video-wrapper">
-      <iframe
-        src="https://www.youtube.com/embed/MZ1VQ3E_m0I?rel=0&modestbranding=1"
-        title="9-Figure Amazon Operating System demo"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
-      </iframe>
+      <video controls preload="metadata" playsinline poster="vsl-poster.jpg">
+        <source src="vsl.mp4" type="video/mp4">
+        Dein Browser unterstützt eingebettete Videos nicht.
+      </video>
     </div>
   </div>
 </section>
