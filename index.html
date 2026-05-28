@@ -223,11 +223,17 @@
       border: 1px solid var(--border);
       box-shadow: 0 32px 80px rgba(0,0,0,0.55);
     }
-    .video-wrapper iframe,
+    .video-wrapper iframe {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%; border: none;
+    }
+    /* Native <video> uses contain so the browser controls bar (rendered at
+       the bottom of the video frame) stays inside the visible wrapper.
+       cover would crop the video edges and hide the play controls. */
     .video-wrapper video {
       position: absolute; top: 0; left: 0;
       width: 100%; height: 100%; border: none;
-      object-fit: cover;
+      object-fit: contain;
       background: #000;
     }
     .video-mobile { display: none; }
