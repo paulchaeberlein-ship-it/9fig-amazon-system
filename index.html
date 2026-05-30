@@ -222,8 +222,12 @@
       background: var(--dark2);
       border: 1px solid var(--border);
       box-shadow: 0 32px 80px rgba(0,0,0,0.55);
-      z-index: 20;                  /* lift above any floating-bg shapes that catch clicks */
-      isolation: isolate;           /* own stacking context, avoids overlay surprises */
+      z-index: 9999;                  /* nuke option: lift above anything that could overlap */
+      isolation: isolate;             /* own stacking context */
+      pointer-events: auto !important; /* nothing inherited can disable clicks here */
+    }
+    .video-wrapper * {
+      pointer-events: auto !important;
     }
     .video-wrapper iframe {
       position: absolute; top: 0; left: 0;
