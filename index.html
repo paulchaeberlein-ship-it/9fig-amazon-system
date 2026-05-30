@@ -1615,6 +1615,7 @@
     // pull case-studies up so it sits exactly at pin-release scroll position
     caseStudies.style.marginTop = '-100vh';
     caseStudies.style.opacity = '0';
+    caseStudies.style.pointerEvents = 'none';   // ← when invisible, don't catch clicks (was blocking the hero video)
     if (!caseStudies.style.position) caseStudies.style.position = 'relative';
     caseStudies.style.zIndex = '2';
     caseStudies.style.transformOrigin = 'center top';
@@ -1713,6 +1714,9 @@
       var actualScale = (p >= 1) ? 1 : csScale;
       var actualOpacity = (p >= 1) ? 1 : csOpacity;
       caseStudies.style.opacity = actualOpacity;
+      // pointer-events follows opacity: invisible case-studies must NOT catch
+      // clicks (was blocking the hero video / CTAs at scroll position 0)
+      caseStudies.style.pointerEvents = (actualOpacity > 0.01) ? 'auto' : 'none';
       // translate3d (instead of translateY) forces a dedicated GPU layer,
       // so the scale animation composites instead of repainting every frame
       caseStudies.style.transform = 'translate3d(0, ' + csTranslate + 'px, 0) scale(' + actualScale + ')';
