@@ -32,6 +32,19 @@
     .footer-links{display:flex;gap:24px}
     @media(max-width:600px){nav,footer{padding:16px 20px}.container{padding:40px 20px 80px}.footer-links{gap:16px}}
   </style>
+
+  <!-- ─── ANALYTICS CONFIG ─────────────────────────────────────────────
+       Replace the three placeholder IDs below with your real ones, then
+       redeploy. Trackers are gated behind a consent banner (DSGVO).
+       Nothing fires until the user clicks „Akzeptieren". -->
+  <script>
+    window.ANALYTICS_CONFIG = {
+      META_PIXEL_ID:       "REPLACE_WITH_META_PIXEL_ID",
+      CLARITY_PROJECT_ID:  "REPLACE_WITH_CLARITY_PROJECT_ID",
+      GA4_MEASUREMENT_ID:  "REPLACE_WITH_GA4_MEASUREMENT_ID",
+    };
+  </script>
+  <!-- ─── /ANALYTICS CONFIG ─────────────────────────────────────────── -->
 </head>
 <body>
 <nav>
@@ -79,8 +92,37 @@
   <h3>2.3 Kontaktaufnahme per E-Mail</h3>
   <p>Wenn du uns per E-Mail kontaktierst, werden deine angegebenen Daten (Name, E-Mail, Nachrichteninhalt) zur Bearbeitung deiner Anfrage verarbeitet. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO.</p>
 
-  <h2>3. Cookies</h2>
-  <p>Diese Website verwendet ausschließlich technisch notwendige Cookies, die für den Betrieb der Seite erforderlich sind. Es werden keine Marketing- oder Tracking-Cookies gesetzt. Eine Einwilligung ist hierfür nicht erforderlich (§ 25 Abs. 2 TTDSG).</p>
+  <h2>3. Cookies & Tracking-Tools</h2>
+  <p>Diese Website verwendet technisch notwendige Cookies sowie — nach deiner ausdrücklichen Einwilligung (§ 25 Abs. 1 TTDSG) — die folgenden Tracking-Dienste. Du kannst deine Einwilligung jederzeit über den „Cookie-Einstellungen"-Button unten links widerrufen.</p>
+
+  <h3>3.1 Meta Pixel (Facebook/Instagram)</h3>
+  <p><strong>Anbieter:</strong> Meta Platforms Ireland Ltd., 4 Grand Canal Square, Dublin 2, Irland.<br>
+     <strong>Zweck:</strong> Messung der Wirksamkeit unserer Anzeigen auf Facebook/Instagram, Erstellung von Custom Audiences für Retargeting.<br>
+     <strong>Verarbeitete Daten:</strong> IP-Adresse, Browser-Informationen, besuchte Seiten, Conversion-Events, gegebenenfalls Facebook-Nutzer-ID.<br>
+     <strong>Rechtsgrundlage:</strong> Einwilligung (Art. 6 Abs. 1 lit. a DSGVO).<br>
+     <strong>Datenübertragung:</strong> USA — auf Basis EU-US Data Privacy Framework und Standardvertragsklauseln.<br>
+     <strong>Speicherdauer:</strong> bis zu 2 Jahre, abhängig vom Event-Typ.<br>
+     <strong>Mehr Infos:</strong> <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener">facebook.com/privacy/policy</a></p>
+
+  <h3>3.2 Microsoft Clarity</h3>
+  <p><strong>Anbieter:</strong> Microsoft Corporation, One Microsoft Way, Redmond, WA 98052, USA.<br>
+     <strong>Zweck:</strong> Erstellung anonymisierter Heatmaps und Session-Replays zur Verbesserung der User Experience.<br>
+     <strong>Verarbeitete Daten:</strong> Geräte- und Browser-Informationen, IP-Adresse (anonymisiert), Maus-, Scroll- und Klick-Verhalten. Sensitive Eingabefelder werden automatisch maskiert.<br>
+     <strong>Rechtsgrundlage:</strong> Einwilligung (Art. 6 Abs. 1 lit. a DSGVO).<br>
+     <strong>Datenübertragung:</strong> USA — auf Basis EU-US Data Privacy Framework und Standardvertragsklauseln.<br>
+     <strong>Speicherdauer:</strong> 1 Jahr.<br>
+     <strong>Mehr Infos:</strong> <a href="https://privacy.microsoft.com/de-de/privacystatement" target="_blank" rel="noopener">privacy.microsoft.com</a></p>
+
+  <h3>3.3 Google Analytics 4</h3>
+  <p><strong>Anbieter:</strong> Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland.<br>
+     <strong>Zweck:</strong> Analyse des Nutzerverhaltens, Reichweitenmessung, Optimierung der Website.<br>
+     <strong>Verarbeitete Daten:</strong> IP-Adresse (anonymisiert via <code>anonymize_ip</code>), Geräte- und Browser-Informationen, besuchte Seiten, Verweildauer, Conversion-Events.<br>
+     <strong>Rechtsgrundlage:</strong> Einwilligung (Art. 6 Abs. 1 lit. a DSGVO).<br>
+     <strong>Datenübertragung:</strong> USA — auf Basis EU-US Data Privacy Framework und Standardvertragsklauseln.<br>
+     <strong>Speicherdauer:</strong> 14 Monate.<br>
+     <strong>Mehr Infos:</strong> <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></p>
+
+  <h3>3.4 Google Calendar Embed</h3>
   <p>Das eingebettete Google Calendar Widget kann eigene Cookies setzen. Bitte beachte hierzu die Datenschutzerklärung von Google.</p>
 
   <h2>4. Weitergabe von Daten</h2>
@@ -126,5 +168,138 @@
     <a href="agb.html">AGB</a>
   </div>
 </footer>
+<!-- ════════════════════════════════════════════════════════════════════
+     COOKIE CONSENT BANNER + ANALYTICS LOADERS
+     (Meta Pixel · Microsoft Clarity · Google Analytics 4)
+
+     DSGVO requirement: trackers fire only after user clicks „Akzeptieren".
+     Choice persists in localStorage as "alc_consent" = "granted" / "denied".
+     User can revoke later via a small button in the footer (#alc-revoke).
+     ════════════════════════════════════════════════════════════════════ -->
+<style>
+  .alc-consent {
+    position: fixed; right: 24px; bottom: 24px;
+    max-width: 380px; padding: 18px 20px;
+    background: #13161F;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 14px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.55);
+    font-family: 'Inter', sans-serif; color: rgba(255,255,255,0.92);
+    z-index: 100000;
+    display: none;   /* shown by JS only when no decision yet */
+  }
+  .alc-consent h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .alc-consent p  { font-size: 12.5px; line-height: 1.5; color: rgba(255,255,255,0.72);
+                    margin-bottom: 12px; }
+  .alc-consent a  { color: rgba(255,255,255,0.92); text-decoration: underline; }
+  .alc-consent .row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .alc-consent button {
+    flex: 1 1 0; min-width: 100px;
+    padding: 9px 14px; border-radius: 8px; cursor: pointer;
+    font-family: inherit; font-size: 12.5px; font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: transparent; color: rgba(255,255,255,0.85);
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .alc-consent button:hover { background: rgba(255,255,255,0.06); }
+  .alc-consent button.primary {
+    background: #ffffff; color: #0B0D14; border-color: #ffffff;
+  }
+  .alc-consent button.primary:hover { background: rgba(255,255,255,0.88); }
+  #alc-revoke {
+    position: fixed; left: 14px; bottom: 14px; z-index: 100000;
+    font-size: 10.5px; color: rgba(255,255,255,0.42);
+    background: transparent; border: 0; cursor: pointer;
+    padding: 4px 6px;
+  }
+  #alc-revoke:hover { color: rgba(255,255,255,0.78); }
+</style>
+
+<div class="alc-consent" id="alc-consent">
+  <h4>🍪 Cookies & Tracking</h4>
+  <p>Wir nutzen Meta Pixel, Microsoft Clarity und Google Analytics 4, um diese
+     Seite zu messen und zu verbessern. Detail in unserer
+     <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
+  <div class="row">
+    <button id="alc-deny">Ablehnen</button>
+    <button id="alc-accept" class="primary">Akzeptieren</button>
+  </div>
+</div>
+
+<button id="alc-revoke" style="display:none">🍪 Cookie-Einstellungen</button>
+
+<script>
+(function() {
+  const CONFIG  = window.ANALYTICS_CONFIG || {};
+  const KEY     = "alc_consent";
+  const banner  = document.getElementById("alc-consent");
+  const revoke  = document.getElementById("alc-revoke");
+
+  function loadMetaPixel(id) {
+    if (!id || id.startsWith("REPLACE")) return;
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+      (window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', id);
+    fbq('track', 'PageView');
+  }
+
+  function loadClarity(id) {
+    if (!id || id.startsWith("REPLACE")) return;
+    (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script",id);
+  }
+
+  function loadGA4(id) {
+    if (!id || id.startsWith("REPLACE")) return;
+    const s = document.createElement('script');
+    s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=" + id;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', id, { anonymize_ip: true });
+  }
+
+  function fireAll() {
+    loadMetaPixel(CONFIG.META_PIXEL_ID);
+    loadClarity(CONFIG.CLARITY_PROJECT_ID);
+    loadGA4(CONFIG.GA4_MEASUREMENT_ID);
+  }
+
+  function setConsent(value) {
+    try { localStorage.setItem(KEY, value); } catch (e) {}
+    banner.style.display = "none";
+    revoke.style.display = "block";
+    if (value === "granted") fireAll();
+  }
+
+  // Initial state
+  let stored = null;
+  try { stored = localStorage.getItem(KEY); } catch (e) {}
+  if (stored === "granted") {
+    fireAll();
+    revoke.style.display = "block";
+  } else if (stored === "denied") {
+    revoke.style.display = "block";
+  } else {
+    // No decision yet → show banner
+    banner.style.display = "block";
+  }
+
+  // Wire buttons
+  document.getElementById("alc-accept").addEventListener("click", () => setConsent("granted"));
+  document.getElementById("alc-deny").addEventListener("click",  () => setConsent("denied"));
+  revoke.addEventListener("click", () => {
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    location.reload();
+  });
+})();
+</script>
+
 </body>
 </html>
