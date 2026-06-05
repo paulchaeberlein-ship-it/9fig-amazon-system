@@ -168,8 +168,9 @@
 </style>
 
 <div class="alc-consent" id="alc-consent">
-  <h4>🍪 Cookies & Tracking</h4>
-  <p>Mehr Infos in unserer
+  <h4>🍪 Cookies</h4>
+  <p>Reichweitenmessung läuft cookielos. Mit „Akzeptieren" erlaubst du personalisierte
+     Ads + Session-Replays. Details:
      <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
   <div class="row">
     <button id="alc-deny">Ablehnen</button>
@@ -186,25 +187,55 @@
   const banner  = document.getElementById("alc-consent");
   const revoke  = document.getElementById("alc-revoke");
 
-  function loadMetaPixel(id) {
+  // ── LIMITED MODE — fires immediately on page load WITHOUT cookies ──
+  //
+  // Each tracker has a vendor-blessed "anonymous / consent-mode-denied
+  // / limited-data-use" flag. These send aggregated/non-PII signals
+  // that the vendors themselves classify as not-requiring-consent.
+  //
+  // German DPAs are split on this — Microsoft, Google and Meta all
+  // claim their cookieless modes are consent-free; some DPAs disagree
+  // for traffic from .de. Documented in datenschutz.html §3 as
+  // "limited tracking before consent, full tracking after".
+  // ────────────────────────────────────────────────────────────────────
+
+  function loadMetaPixel_limited(id) {
     if (!id || id.startsWith("REPLACE")) return;
     !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
       n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
       n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
       t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
       (window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    // Limited Data Use mode — Meta receives the event but with
+    // restricted processing rights. Country 'DE' explicit so Meta
+    // applies EU/DE restrictions. Switches to full mode on consent.
+    fbq('dataProcessingOptions', ['LDU'], 1, 1000);  // 1=country EU, 1000=region unspecified
     fbq('init', id);
     fbq('track', 'PageView');
   }
 
-  function loadClarity(id) {
+  function upgradeMetaPixel_full() {
+    if (!window.fbq) return;
+    // Lift the LDU restriction — full pixel mode after consent.
+    fbq('dataProcessingOptions', []);
+  }
+
+  function loadClarity_anonymous(id) {
     if (!id || id.startsWith("REPLACE")) return;
     (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
       t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
       y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script",id);
+    // Tell Clarity to mask sensitive content & not use cookies until consent.
+    // Microsoft's docs say this still gives heatmaps + session replays.
+    window.clarity('consent', false);
   }
 
-  function loadGA4(id) {
+  function upgradeClarity_full() {
+    if (!window.clarity) return;
+    window.clarity('consent', true);   // Now Clarity may set cookies + collect full data
+  }
+
+  function loadGA4_consentModeDenied(id) {
     if (!id || id.startsWith("REPLACE")) return;
     const s = document.createElement('script');
     s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=" + id;
@@ -212,28 +243,70 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     window.gtag = gtag;
+    // Consent Mode v2 — set all signals to 'denied' BEFORE first config.
+    // GA4 then sends cookieless pings; Google fills gaps with modeling.
+    gtag('consent', 'default', {
+      ad_storage:           'denied',
+      ad_user_data:         'denied',
+      ad_personalization:   'denied',
+      analytics_storage:    'denied',
+      functionality_storage:'denied',
+      personalization_storage:'denied',
+      security_storage:     'granted',  // technical cookies always ok
+      wait_for_update:      500,        // 0.5s — give consent banner a moment
+    });
     gtag('js', new Date());
-    gtag('config', id, { anonymize_ip: true });
+    gtag('config', id, {
+      anonymize_ip:         true,
+      allow_google_signals: false,
+      allow_ad_personalization_signals: false,
+    });
   }
 
-  function fireAll() {
-    loadMetaPixel(CONFIG.META_PIXEL_ID);
-    loadClarity(CONFIG.CLARITY_PROJECT_ID);
-    loadGA4(CONFIG.GA4_MEASUREMENT_ID);
+  function upgradeGA4_full() {
+    if (!window.gtag) return;
+    gtag('consent', 'update', {
+      ad_storage:           'granted',
+      ad_user_data:         'granted',
+      ad_personalization:   'granted',
+      analytics_storage:    'granted',
+      functionality_storage:'granted',
+      personalization_storage:'granted',
+    });
+  }
+
+  // Fire limited tracking immediately on page load — every visitor
+  // gets counted (subject to the vendor's anonymous-mode rules).
+  function fireAllLimited() {
+    loadMetaPixel_limited(CONFIG.META_PIXEL_ID);
+    loadClarity_anonymous(CONFIG.CLARITY_PROJECT_ID);
+    loadGA4_consentModeDenied(CONFIG.GA4_MEASUREMENT_ID);
+  }
+
+  // Upgrade to full tracking when the user clicks Akzeptieren — the
+  // scripts are already loaded, we just lift the limited-mode flags.
+  function upgradeAllFull() {
+    upgradeMetaPixel_full();
+    upgradeClarity_full();
+    upgradeGA4_full();
   }
 
   function setConsent(value) {
     try { localStorage.setItem(KEY, value); } catch (e) {}
     banner.style.display = "none";
     revoke.style.display = "block";
-    if (value === "granted") fireAll();
+    if (value === "granted") upgradeAllFull();
+    // value === "denied" → stay in limited mode (no upgrade)
   }
 
-  // Initial state
+  // Initial state — fire limited tracking always, banner only shows
+  // until the user has made a decision (then upgrade-or-stay).
+  fireAllLimited();
+
   let stored = null;
   try { stored = localStorage.getItem(KEY); } catch (e) {}
   if (stored === "granted") {
-    fireAll();
+    upgradeAllFull();
     revoke.style.display = "block";
   } else if (stored === "denied") {
     revoke.style.display = "block";
