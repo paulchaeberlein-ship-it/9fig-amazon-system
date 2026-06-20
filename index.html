@@ -68,9 +68,10 @@
       transition: background 0.2s;
     }
     .lead-bar:hover .lb-cta { background: #241a06; }
+    /* Long copy: hide the sub-line below a large desktop so the bar never wraps/clips */
+    @media (max-width: 1320px) { .lead-bar .lb-sub { display: none; } }
     @media (max-width: 768px) {
       .lead-bar { font-size: 12px; gap: 10px; }
-      .lead-bar .lb-sub { display: none; }
       .lead-bar .lb-cta { font-size: 11px; padding: 6px 12px; }
     }
 
@@ -1099,7 +1100,7 @@
 <a class="lead-bar" href="https://wa.me/4917620266087?text=Case" target="_blank" rel="noopener" aria-label="Case-Study-Routine per WhatsApp anfordern — DM uns Case">
   <span class="lb-text">
     <span>✨</span>
-    <span><span class="lb-strong">NEU: Schritt-für-Schritt-Routine unserer Case Studies</span> <span class="lb-sub">— DM uns „Case" auf WhatsApp. Gratis (wir prüfen nur kurz, dass du kein direkter Wettbewerber bist).</span></span>
+    <span><span class="lb-strong">NEU: Erhalte unsere Schritt-für-Schritt-Routine unserer Case Studies</span> <span class="lb-sub">— DM uns „Case" auf WhatsApp. Gratis (wir prüfen nur kurz, dass du kein direkter Wettbewerber bist).</span></span>
   </span>
   <span class="lb-cta">DM uns „Case" →</span>
 </a>
