@@ -32,6 +32,7 @@
       --muted:   rgba(255,255,255,0.55);
       --border:  rgba(255,255,255,0.08);
       --logo-bg: #F4F5F7;
+      --lead-bar-h: 44px;   /* sticky lead-magnet bar height — drives nav + hero offsets */
     }
 
     html { scroll-behavior: smooth; }
@@ -42,10 +43,35 @@
       overflow-x: hidden;
     }
 
+    /* ── STICKY LEAD-MAGNET BAR (top, above nav) ── */
+    .lead-bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 101;
+      height: var(--lead-bar-h);
+      display: flex; align-items: center; justify-content: center; gap: 14px;
+      padding: 0 16px; box-sizing: border-box;
+      background: linear-gradient(90deg, #fbbf24 0%, #f97316 100%);
+      color: #1a1205; text-decoration: none; font-size: 14px; font-weight: 600;
+      border-bottom: 1px solid rgba(0,0,0,0.18);
+    }
+    .lead-bar .lb-text { display: flex; align-items: center; gap: 8px; min-width: 0; }
+    .lead-bar .lb-strong { font-weight: 800; }
+    .lead-bar .lb-sub { font-weight: 600; opacity: 0.82; }
+    .lead-bar .lb-cta {
+      background: #3a2a0a; color: #fff; padding: 7px 16px; border-radius: 100px;
+      font-weight: 700; font-size: 13px; white-space: nowrap; flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .lead-bar:hover .lb-cta { background: #241a06; }
+    @media (max-width: 768px) {
+      .lead-bar { font-size: 12px; gap: 10px; }
+      .lead-bar .lb-sub { display: none; }
+      .lead-bar .lb-cta { font-size: 11px; padding: 6px 12px; }
+    }
+
     /* ── NAV ── */
     nav {
       position: fixed;
-      top: 0; left: 0; right: 0;
+      top: var(--lead-bar-h); left: 0; right: 0;
       z-index: 100;
       display: flex;
       align-items: center;
@@ -153,12 +179,12 @@
       50%       { transform: translateY(-30px) scale(1.05); }
     }
     .hero {
-      height: 100vh;
+      min-height: 100vh;   /* was height:100vh — grow to fit content so it never clips under .hero-wrapper overflow:hidden */
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 56px;
       align-items: center;
-      padding: 100px 64px 32px;
+      padding: calc(100px + var(--lead-bar-h)) 64px 32px;
       max-width: 1400px;
       margin: 0 auto;
       box-sizing: border-box;
@@ -717,7 +743,7 @@
         grid-template-columns: 1fr;
         height: auto;
         min-height: auto;
-        padding: 104px 20px 32px;
+        padding: calc(104px + var(--lead-bar-h)) 20px 32px;
         gap: 20px;
       }
       h1 { font-size: 22px; }
@@ -1063,6 +1089,15 @@
   </style>
 </head>
 <body>
+
+<!-- STICKY LEAD-MAGNET BAR -->
+<a class="lead-bar" href="https://wa.me/4917620266087?text=Routine" target="_blank" rel="noopener" aria-label="Schritt-für-Schritt-Routine per WhatsApp anfordern">
+  <span class="lb-text">
+    <span>✨</span>
+    <span><span class="lb-strong">NEU: Schritt-für-Schritt-Routine</span> <span class="lb-sub">— die exakte Routine hinter unserer Case Study, gratis per WhatsApp</span></span>
+  </span>
+  <span class="lb-cta">Auf WhatsApp anfordern →</span>
+</a>
 
 <!-- NAV -->
 <nav>
