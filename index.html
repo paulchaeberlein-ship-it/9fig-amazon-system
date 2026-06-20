@@ -43,9 +43,15 @@
       overflow-x: hidden;
     }
 
-    /* ── STICKY LEAD-MAGNET BAR (top, above nav) ── */
+    /* ── FIXED HEADER: nav + lead bar stacked, both sticky ── */
+    .site-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; flex-direction: column;
+    }
+
+    /* ── STICKY LEAD-MAGNET BAR (renders UNDER the nav via flex order) ── */
     .lead-bar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 101;
+      order: 1;
       height: var(--lead-bar-h);
       display: flex; align-items: center; justify-content: center; gap: 14px;
       padding: 0 16px; box-sizing: border-box;
@@ -70,8 +76,6 @@
 
     /* ── NAV ── */
     nav {
-      position: fixed;
-      top: var(--lead-bar-h); left: 0; right: 0;
       z-index: 100;
       display: flex;
       align-items: center;
@@ -1090,7 +1094,8 @@
 </head>
 <body>
 
-<!-- STICKY LEAD-MAGNET BAR -->
+<header class="site-header">
+<!-- LEAD-MAGNET BAR (renders under the nav via flex order) -->
 <a class="lead-bar" href="https://wa.me/4917620266087?text=Routine" target="_blank" rel="noopener" aria-label="Schritt-für-Schritt-Routine per WhatsApp anfordern">
   <span class="lb-text">
     <span>✨</span>
@@ -1116,6 +1121,7 @@
     <a class="nav-cta" href="https://calendar.app.google/f9ft5VoZprysf9gd8" target="_blank" rel="noopener">Gespräch buchen →</a>
   </div>
 </nav>
+</header>
 
 <!-- HERO -->
 <div class="hero-wrapper">
