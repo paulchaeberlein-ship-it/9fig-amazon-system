@@ -57,6 +57,7 @@
       padding: 0 16px; box-sizing: border-box;
       background: linear-gradient(90deg, #fbbf24 0%, #f97316 100%);
       color: #1a1205; text-decoration: none; font-size: 14px; font-weight: 600;
+      white-space: nowrap;   /* never wrap to a 2nd line (would clip at fixed height) */
       border-bottom: 1px solid rgba(0,0,0,0.18);
     }
     .lead-bar .lb-text { display: flex; align-items: center; gap: 8px; min-width: 0; }
@@ -68,8 +69,9 @@
       transition: background 0.2s;
     }
     .lead-bar:hover .lb-cta { background: #241a06; }
-    /* Long copy: hide the sub-line below a large desktop so the bar never wraps/clips */
-    @media (max-width: 1320px) { .lead-bar .lb-sub { display: none; } }
+    /* Long copy: full headline+sub only where it fits one line (~1440px); below that
+       show just headline + button so it never overflows. Smooth when zooming in. */
+    @media (max-width: 1439px) { .lead-bar .lb-sub { display: none; } }
     @media (max-width: 768px) {
       .lead-bar { font-size: 12px; gap: 10px; }
       .lead-bar .lb-cta { font-size: 11px; padding: 6px 12px; }
