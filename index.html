@@ -62,6 +62,7 @@
     }
     .lead-bar .lb-text { display: flex; align-items: center; gap: 8px; min-width: 0; }
     .lead-bar .lb-strong { font-weight: 800; }
+    .lead-bar .lb-short { display: none; }   /* mobile-only short headline (toggled below) */
     .lead-bar .lb-sub { font-weight: 600; opacity: 0.82; }
     .lead-bar .lb-cta {
       background: #3a2a0a; color: #fff; padding: 7px 16px; border-radius: 100px;
@@ -73,8 +74,10 @@
        show just headline + button so it never overflows. Smooth when zooming in. */
     @media (max-width: 1439px) { .lead-bar .lb-sub { display: none; } }
     @media (max-width: 768px) {
-      .lead-bar { font-size: 12px; gap: 10px; }
+      .lead-bar { font-size: 12px; gap: 8px; justify-content: space-between; padding: 0 12px; }
       .lead-bar .lb-cta { font-size: 11px; padding: 6px 12px; }
+      .lead-bar .lb-full  { display: none; }    /* hide long headline on mobile */
+      .lead-bar .lb-short { display: inline; }  /* show short headline on mobile */
     }
 
     /* ── NAV ── */
@@ -1102,7 +1105,7 @@
 <a class="lead-bar" href="https://wa.me/4917620266087?text=Case" target="_blank" rel="noopener" aria-label="Case-Study-Routine per WhatsApp anfordern — DM uns Case">
   <span class="lb-text">
     <span>✨</span>
-    <span><span class="lb-strong">NEU: Erhalte unsere Schritt-für-Schritt-Routine unserer Case Studies</span> <span class="lb-sub">— DM uns „Case" auf WhatsApp. Gratis (wir prüfen nur kurz, dass du kein direkter Wettbewerber bist).</span></span>
+    <span><span class="lb-strong"><span class="lb-full">NEU: Erhalte unsere Schritt-für-Schritt-Routine unserer Case Studies</span><span class="lb-short">NEU: Gratis Case-Study-Routine</span></span> <span class="lb-sub">— DM uns „Case" auf WhatsApp. Gratis (wir prüfen nur kurz, dass du kein direkter Wettbewerber bist).</span></span>
   </span>
   <span class="lb-cta">DM uns „Case" →</span>
 </a>
